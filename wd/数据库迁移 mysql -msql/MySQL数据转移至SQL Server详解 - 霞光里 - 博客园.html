@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://www.cnblogs.com/loong-hon/p/10791610.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="最近有个活是mysql数据转移到sql server 2012，直接手动转工作量太大，发现网上有工具教程，则记录一下。 一．安装MySQL ODBC驱动为MySQL安装Connector/ODBC驱动">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MySQL数据转移至SQL Server详解 - 霞光里 - 博客园</title>
+    
+    <link rel="stylesheet" href="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/bundle-darkgreentrip.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/bundle-darkgreentrip-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/loong-hon/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/loong-hon/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/loong-hon/wlwmanifest.xml">
+    <script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/amp4ads-host-v0.js.下载"></script><script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/pubads_impl_rendering_2020030501.js.下载"></script><script async="" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/encoder.js.下载"></script><script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 248060;
+        var currentBlogApp = 'loong-hon';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var skinName = 'darkgreentrip';
+    </script>
+    
+    
+    
+<link rel="preload" href="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/f.txt"></script><script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/pubads_impl_2020030501.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-37/html/container.html?7e8e8df6e8e16b03bbd0eaaeabca7c05"></head>
+<body>
+    <a name="top"></a>
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/loong-hon/"><img id="blogLogo" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/loong-hon/">︶ㄣ霞光里</a>
+</h1>
+<h2>
+愿你生命中有够多的云翳，来造成一个美丽的黄昏！
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/loong-hon/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E9%9C%9E%E5%85%89%E9%87%8C">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/loong-hon/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+101&nbsp; </span>
+<span id="stats_article_count">文章 - 
+0&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+6</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/loong-hon/p/10791610.html">MySQL数据转移至SQL Server详解</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p>最近有个活是mysql数据转移到sql server 2012，直接手动转工作量太大，发现网上有工具教程，则记录一下。</p>
+<p>一．安装MySQL ODBC驱动<br>为MySQL安装Connector/ODBC驱动。在此需要注意的一点是Connector/ODBC驱动与MySQL Server的版本对应问题。</p>
+<p>下载地址：https://dev.mysql.com/downloads/connector/odbc/&nbsp;</p>
+<p>我下载的是：mysql-connector-odbc-8.0.16-winx64.msi</p>
+<p>安装的时候能会提示需要 Microsoft Visual C++ 2015 Redistributable 等 ，直接微软官网下载就行。</p>
+<p>二．创建系统DSN<br>DSN为ODBC定义了一个确定的数据库和必须用到的ODBC驱动程序。每个ODBC驱动程序定义为该驱动程序支持的一个数据库创建DSN需要的信息。 <br>创建系统DSN步骤如下： <br>开始-&gt;设置-&gt;控制面板-&gt;管理工具-&gt;数据源（ODBC），按该流程打开ODBC数据源管理器。 <br>切换至系统DSN选项卡，点击添加按钮。弹出创建新数据源对话框，选择MySQL ODBC 8.0 ANSI Driver驱动程序(根据版本不同，可能名称有出入)，点击完成按钮。 </p>
+<p>&nbsp;<img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/819676-20190429170605956-968701261.png" alt=""></p>
+<p>&nbsp;</p>
+<p><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/819676-20190429170709512-1540119144.png" alt=""><br>在弹出的链接MySQL对话框中设置MySQL数据库帐号信息。</p>
+<p>&nbsp;</p>
+<p><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/819676-20190429170805610-263214947.png" alt=""></p>
+<p>&nbsp;</p>
+<p><br>关键是Login选项卡下的几个参数。 <br>l Data Source Name，这个根据命名规则任意命名就可以了，最终会显示于ODBC数据源管理器中系统DSN选项卡下的列表中。 <br>l Description，对该数据源的描述，可不填写。 <br>l Server，MySQL Server的主机名，这里填写计算机主机名或者localhost均可。 <br>l User和Password是MySQL Server对应的用户名和密码。 <br>l DataBase，选定该数据源所指向的数据库。在这一里必须要求前面几个参数都正确，否则会提示错误，无法选择MySQL Server中的数据库。 <br>还有两个需要注意的参数是Connect Options选项卡下的Port和Character Set。Port用于设置MySQL Server的通信端口，默认是3306，在安装时候如果没有改动默认端口，这里可以不设置。Character Set用于设置数据库语言编码，这里选择gbk。 <br>点击OK按钮，完成系统DSN的创建，返回到ODBC数据源管理器对话框，在系统DSN选项卡下可查看到刚建立的数据源。点击确定按钮退出。</p>
+<p>三．创建MSSQL到MySQL的链接服务<br>打开SQL Server Management Studio，运行下述语句，通过前面新建的ODBC数据源建立与MySQL Server链接服务器。</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">EXEC</span><span style="color: #000000;"> master.dbo.sp_addlinkedserver 
+</span><span style="color: #008000;">@server</span> <span style="color: #808080;">=</span> N<span style="color: #ff0000;">'</span><span style="color: #ff0000;">MYSQL</span><span style="color: #ff0000;">'</span><span style="color: #000000;">, 
+</span><span style="color: #008000;">@srvproduct</span><span style="color: #808080;">=</span>N<span style="color: #ff0000;">'</span><span style="color: #ff0000;">MySQL</span><span style="color: #ff0000;">'</span><span style="color: #000000;">, 
+</span><span style="color: #008000;">@provider</span><span style="color: #808080;">=</span>N<span style="color: #ff0000;">'</span><span style="color: #ff0000;">MSDASQL</span><span style="color: #ff0000;">'</span><span style="color: #000000;">, 
+</span><span style="color: #008000;">@provstr</span><span style="color: #808080;">=</span>N<span style="color: #ff0000;">'</span><span style="color: #ff0000;">DRIVER={MySQL ODBC 8.0 ANSI Driver}; SERVER=127.0.0.1; _ 
+DATABASE=news; USER=root; PASSWORD=root; OPTION=3</span><span style="color: #ff0000;">'</span> </pre>
+</div>
+<p>&nbsp;</p>
+<p>刷新下链接服务器节点，既可以看到上述用语句创建的链接</p>
+<p><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/819676-20190429170902483-318453463.png" alt=""></p>
+<p>&nbsp;</p>
+<p><br>四．利用SQL语句转移数据至MSSQL<br>在Microsoft SQL Server中创建新的数据库，运行如下语句，运行后就可以把MySQL 数据库 “news” 导入到 Microsoft SQL 数据库“news”中。</p>
+<p>SELECT * INTO 数据库.dbo.表<br>FROM OPENQUERY (MySQL ,'select * from 数据库.表' )<br><br>例如：将MySQL数据库“news”中的article表导入到SQL Server数据库的“news”的article中</p>
+<p> SELECT * INTO [news].dbo.article <br>FROM openquery(MYSQL, 'SELECT * FROM news.article')  <br><br>执行结果</p>
+<p><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/819676-20190429171032436-1615460459.png" alt=""></p>
+<p>参考地址：https://blog.csdn.net/qq_37308779/article/details/80679358</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/loong-hon/category/742185.html" target="_blank">数据库</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/loong-hon/tag/sqlserver/">sqlserver</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(10791610,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;3f2970cf-9d6d-e511-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/loong-hon/" target="_blank"><img src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/20151014180305.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/loong-hon/">霞光里</a><br>
+            <a href="https://home.cnblogs.com/u/loong-hon/followees/">关注 - 6</a><br>
+            <a href="https://home.cnblogs.com/u/loong-hon/followers/">粉丝 - 13</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;3f2970cf-9d6d-e511-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(10791610,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(10791610,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/loong-hon/p/10619616.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/loong-hon/p/10619616.html" title="发布于 2019-03-29 10:29">Apache Shiro Java反序列化漏洞分析</a>
+    <br>
+    <a href="https://www.cnblogs.com/loong-hon/p/10820361.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/loong-hon/p/10820361.html" title="发布于 2019-05-06 16:22">Oracle 解决【ORA-01704:字符串文字太长】</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2019-04-29 17:14</span>&nbsp;
+<a href="https://www.cnblogs.com/loong-hon/">霞光里</a>&nbsp;
+阅读(<span id="post_view_count">688</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=10791610" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(10791610);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 248060, cb_blogApp = 'loong-hon', cb_blogUserGuid = '3f2970cf-9d6d-e511-9fc1-ac853d9f53cc';
+    var cb_entryId = 10791610, cb_entryCreatedDate = '2019-04-29 17:14', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/loong-hon/p/10791610.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/loong-hon/p/10791610.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-ucancode&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/season?fromSource=gwzcw.3422970.3422970.3422970&amp;utm_medium=cpc&amp;utm_id=gwzcw.3422970.3422970.3422970" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【活动】腾讯云服务器推出云产品采购季 1核2G首年仅需99元</a><br><a href="https://developer.aliyun.com/ask/272857?utm_content=g_1000104135" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】Java实战200例（附源码）-助你提升实战能力</a><br><a href="https://developer.aliyun.com/group/interview?utm_content=g_1000088932" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】斩获阿里offer的必看12篇面试合辑</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="CIbe2Kbio-gCFY5xYAod_ZkLBw"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-google-container-id="1" data-load-complete="true" src="./MySQL数据转移至SQL Server详解 - 霞光里 - 博客园_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="MySQL数据转移至MSSQL详解" href="https://www.cnblogs.com/jiyang2008/p/5535477.html" target="_blank" onclick="clickRecomItmem(5535477)">MySQL数据转移至MSSQL详解</a><br>·  <a title="MySQL数据库导入到SQL Server" href="https://www.cnblogs.com/crialy/archive/2011/01/12/1933711.html" target="_blank" onclick="clickRecomItmem(1933711)">MySQL数据库导入到SQL Server</a><br>·  <a title="Microsoft sql server 2008导入mysql 5.5" href="https://www.cnblogs.com/xjb/archive/2013/02/01/sqlservertomysql.html" target="_blank" onclick="clickRecomItmem(2888444)">Microsoft sql server 2008导入mysql 5.5</a><br>·  <a title="MySQLODBC驱动安装和配置数据源" href="https://www.cnblogs.com/benpao1314/p/10120700.html" target="_blank" onclick="clickRecomItmem(10120700)">MySQLODBC驱动安装和配置数据源</a><br>·  <a title="Mysql和SqlServer互相转换" href="https://www.cnblogs.com/losesea/archive/2012/11/08/2760536.html" target="_blank" onclick="clickRecomItmem(2760536)">Mysql和SqlServer互相转换</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/10791610">更多推荐...</a><div id="cnblogs_t5"><a href="https://developer.aliyun.com/article/740731?utm_content=g_1000104143https://developer.aliyun.com/article/740731?utm_content=g_1000104143" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T5-阿里云开发者社区&#39;)">2019 Flink Forward 大会最全视频来了！5大专题不容错过</a></div></div></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CIfe2Kbio-gCFY5xYAod_ZkLBw">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/657881/" target="_blank">美团提抽成，商家怒何用？</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/657883/" target="_blank">Wi-Fi 6，到底有多溜？</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/657877/" target="_blank">一堂司法网课和它的主讲老师为什么突然火了？</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/657876/" target="_blank">特斯拉“太阳能屋顶”要来了？</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/657875/" target="_blank">丑闻上身Soul：我本小师妹，怎么就活成了灭绝师太？</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/loong-hon/">
+            霞光里
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/loong-hon/" title="入园时间：2015-10-08">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/loong-hon/followers/">
+            13
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/loong-hon/followees/">
+            6
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;3f2970cf-9d6d-e511-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        <script>getFollowStatus('3f2970cf-9d6d-e511-9fc1-ac853d9f53cc');</script>
+    </div>
+</div>
+
+</div>
+
+			<div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/02/18&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2020年3月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/04/18&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                        <td class="CalWeekendDay" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                        <td class="" align="center">
+                            5
+                        </td>
+                        <td class="" align="center">
+                            6
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        7
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            14
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            21
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            28
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            4
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                9
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                10
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            11
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    <div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+		<li>
+
+<a href="https://www.cnblogs.com/loong-hon/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/loong-hon/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/loong-hon/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/loong-hon/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/loong-hon/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    <div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/java/">java</a>(22)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/oracle/">oracle</a>(8)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/mysql/">mysql</a>(5)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/Jquery/">Jquery</a>(4)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/AES/">AES</a>(4)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/hibernate/">hibernate</a>(4)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/GitHub/">GitHub</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/Java%E9%9D%A2%E8%AF%95%E9%A2%98/">Java面试题</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/javaee/">javaee</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/loong-hon/tag/nginx/">nginx</a>(2)
+        </li>
+            <li>
+                <a href="https://www.cnblogs.com/loong-hon/tag/">更多</a>
+            </li>
+
+</ul>
+</div>
+
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+        <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔分类
+
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/742187.html" rel="" target="">
+    JavaEE(12)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/752750.html" rel="" target="">
+    Java基础(38)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/1218671.html" rel="" target="">
+    Java框架(13)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/770095.html" rel="" target="">
+    Other(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/742186.html" rel="" target="">
+    计算机网络(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/755316.html" rel="" target="">
+    前端技术(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/742185.html" rel="" target="">
+    数据库(17)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/category/742184.html" rel="" target="">
+    系统服务器(7)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+        <div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔档案
+
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/12.html" rel="" target="">
+    2019年12月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/08.html" rel="" target="">
+    2019年8月(7)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/07.html" rel="" target="">
+    2019年7月(6)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/06.html" rel="" target="">
+    2019年6月(6)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/05.html" rel="" target="">
+    2019年5月(6)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/04.html" rel="" target="">
+    2019年4月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/03.html" rel="" target="">
+    2019年3月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2019/01.html" rel="" target="">
+    2019年1月(9)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/12.html" rel="" target="">
+    2018年12月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/11.html" rel="" target="">
+    2018年11月(4)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/10.html" rel="" target="">
+    2018年10月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/09.html" rel="" target="">
+    2018年9月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/07.html" rel="" target="">
+    2018年7月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/06.html" rel="" target="">
+    2018年6月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/05.html" rel="" target="">
+    2018年5月(4)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/04.html" rel="" target="">
+    2018年4月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2018/03.html" rel="" target="">
+    2018年3月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2017/11.html" rel="" target="">
+    2017年11月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2017/04.html" rel="" target="">
+    2017年4月(3)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2017/02.html" rel="" target="">
+    2017年2月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2016/12.html" rel="" target="">
+    2016年12月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2016/11.html" rel="" target="">
+    2016年11月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2016/09.html" rel="" target="">
+    2016年9月(5)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2016/08.html" rel="" target="">
+    2016年8月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2016/07.html" rel="" target="">
+    2016年7月(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2015/11.html" rel="" target="">
+    2015年11月(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/loong-hon/archive/2015/10.html" rel="" target="">
+    2015年10月(10)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/loong-hon/p/10314501.html#4483900">1. Re:java频繁new对象的优化方案</a></li>
+                    <li class="recent_comment_body"> <a href="https://www.cnblogs.com/loong-hon/p/10791610.html" target="_blank"></a> </li>
+                    <li class="recent_comment_author">--BigOrang</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/loong-hon/p/11003189.html#4430733">2. Re:mysql游标的用法及作用</a></li>
+                    <li class="recent_comment_body">学习了，谢谢楼主的分享</li>
+                    <li class="recent_comment_author">--在斑马线上散布</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/loong-hon/p/10145060.html#4399946">3. Re:Java实现AES加密</a></li>
+                    <li class="recent_comment_body">@ 小鱼儿灬这个我还到没遇到过...</li>
+                    <li class="recent_comment_author">--霞光里</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/loong-hon/p/10145060.html#4399576">4. Re:Java实现AES加密</a></li>
+                    <li class="recent_comment_body">如果加密内容过长， 会出现 加密结果有\r\n</li>
+                    <li class="recent_comment_author">--小鱼儿灬</li>
+                    <li class="recent_comment_title"><a href="http://www.cnblogs.com/loong-hon/p/5827242.html#3855083">5. Re:setAttribute和setParameter方法的区别</a></li>
+                    <li class="recent_comment_body">懂了</li>
+                    <li class="recent_comment_author">--小白javacopy屌</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/5827237.html">
+                            1. oracle里实例和数据库之间的关系(19254)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/10619616.html">
+                            2. Apache Shiro Java反序列化漏洞分析(14630)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/9060515.html">
+                            3. Nginx安装及配置详解包括windows环境(13679)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/10256686.html">
+                            4. java.util.ConcurrentModificationException异常原因及解决方法(12876)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/5827242.html">
+                            5. setAttribute和setParameter方法的区别(11976)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/10145060.html">
+                            1. Java实现AES加密(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/10314501.html">
+                            2. java频繁new对象的优化方案(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/11003189.html">
+                            3. mysql游标的用法及作用(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/5827237.html">
+                            4. oracle里实例和数据库之间的关系(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/loong-hon/p/5827242.html">
+                            5. setAttribute和setParameter方法的区别(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/loong-hon/p/5827242.html">
+                                1. setAttribute和setParameter方法的区别(4)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/loong-hon/p/5827237.html">
+                                2. oracle里实例和数据库之间的关系(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/loong-hon/p/9957353.html">
+                                3. mysql在增加列前进行判断该列是否存在(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/loong-hon/p/10190529.html">
+                                4. Chrome浏览器中autocomplete="off"不起作用解决方案(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/loong-hon/p/6705545.html">
+                                5. oracle存储过程加密(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2020 霞光里
+<br><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+</body></html>

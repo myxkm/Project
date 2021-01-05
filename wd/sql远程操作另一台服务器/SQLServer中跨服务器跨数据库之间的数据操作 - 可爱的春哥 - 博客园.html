@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/gyc19920704/p/6586771.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="首先必须理解一个概念： select&amp;#160;*&amp;#160;from&amp;#160;sys.servers (查看系统表,看原来的服务器名) 要想跨域就必须在以上信息中可以检索到！ 怎样添加？ --创建">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园</title>
+    
+    <link rel="stylesheet" href="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/bundle-anothereon001.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/bundle-anothereon001-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/gyc19920704/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/gyc19920704/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/gyc19920704/wlwmanifest.xml">
+    <script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/amp4ads-host-v0.js.下载"></script><script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/pubads_impl_rendering_2020032302.js.下载"></script><script async="" src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/analytics.js.下载"></script><script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 264220;
+        var currentBlogApp = 'gyc19920704';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var skinName = 'AnotherEon001';
+    </script>
+    
+    
+    
+<link rel="preload" href="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/f.txt"></script><script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/pubads_impl_2020032302.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-37/html/container.html"></head>
+<body>
+    <a name="top"></a>
+    
+    <div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/gyc19920704/">可爱的春哥</a>
+</h1>
+<div id="subtitle">
+
+</div>
+</div>
+<div id="sub"><div class="BlogStats">随笔 - 
+127, 文章 - 
+47, 评论 - 
+9, 引用 - 
+0</div>
+
+</div>
+
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	<div id="post_detail">
+    <div class="post">
+        <h2>
+            
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/gyc19920704/p/6586771.html">SQLServer中跨服务器跨数据库之间的数据操作</a>
+
+        </h2>
+        <div class="postbody">
+            
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p>首先必须理解一个概念：</p>
+<p><strong>select&nbsp;*&nbsp;from&nbsp;sys.servers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(查看系统表,看原来的服务器名)</strong></p>
+<p><strong>要想跨域就必须在以上信息中可以检索到！</strong></p>
+<p><strong>怎样添加？</strong></p>
+<p>&nbsp;</p>
+<div class="line number3 index2 alt2"><strong><span style="color: #ff0000;"><code class="sql comments">--创建链接服务器&nbsp;</code></span></strong></div>
+<div class="line number4 index3 alt1"><span style="color: #ff0000;"><strong><code class="sql keyword">exec</code>&nbsp;<code class="sql plain">sp_addlinkedserver&nbsp;&nbsp;&nbsp;</code><code class="sql string">'ITSV&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'远程服务器名或ip地址&nbsp;'</code>&nbsp;</strong></span></div>
+<div class="line number5 index4 alt2"><span style="color: #ff0000;"><strong><code class="sql keyword">exec</code>&nbsp;<code class="sql plain">sp_addlinkedsrvlogin&nbsp;&nbsp;</code><code class="sql string">'ITSV&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'false&nbsp;'</code><code class="sql plain">,</code><code class="sql color1">null</code><code class="sql plain">,&nbsp;</code><code class="sql string">'用户名&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'密码&nbsp;'</code>&nbsp;</strong></span></div>
+<div class="line number6 index5 alt1">&nbsp;</div>
+<div class="line number7 index6 alt2"><strong><span style="color: #ff0000;"><code class="sql comments">--查询示例&nbsp;</code></span></strong></div>
+<div class="line number8 index7 alt1"><strong><span style="color: #ff0000;"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">ITSV.数据库名.dbo.表名&nbsp;</code></span></strong></div>
+<div class="line number9 index8 alt2"><strong><span style="color: #ff0000;">&nbsp;</span></strong></div>
+<div class="line number10 index9 alt1"><strong><span style="color: #ff0000;"><code class="sql comments">--导入示例&nbsp;</code></span></strong></div>
+<div class="line number11 index10 alt2"><strong><span style="color: #ff0000;"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code><code class="sql keyword">into</code>&nbsp;<code class="sql plain">表&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">ITSV.数据库名.dbo.表名&nbsp;</code></span></strong></div>
+<div class="line number12 index11 alt1">&nbsp;</div>
+<div class="line number13 index12 alt2"><strong><span style="color: #ff0000;"><code class="sql comments">--以后不再使用时删除链接服务器&nbsp;</code></span></strong></div>
+<div class="line number14 index13 alt1"><strong><span style="color: #ff0000;"><code class="sql keyword">exec</code>&nbsp;<code class="sql plain">sp_dropserver&nbsp;&nbsp;</code><code class="sql string">'ITSV&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'droplogins&nbsp;'</code>&nbsp;</span></strong></div>
+<div class="line number15 index14 alt2">&nbsp;</div>
+<div class="line number16 index15 alt1"><code class="sql comments">--连接远程/局域网数据(openrowset/openquery/opendatasource)&nbsp;</code></div>
+<div class="line number17 index16 alt2"><code class="sql comments">--1、openrowset&nbsp;</code></div>
+<div class="line number18 index17 alt1">&nbsp;</div>
+<div class="line number19 index18 alt2"><code class="sql comments">--查询示例&nbsp;</code></div>
+<div class="line number20 index19 alt1"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">openrowset(&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'sql服务器名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'用户名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'密码&nbsp;'</code><code class="sql plain">,数据库名.dbo.表名)&nbsp;</code></div>
+<div class="line number21 index20 alt2">&nbsp;</div>
+<div class="line number22 index21 alt1"><code class="sql comments">--生成本地表&nbsp;</code></div>
+<div class="line number23 index22 alt2"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code><code class="sql keyword">into</code>&nbsp;<code class="sql plain">表&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">openrowset(&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'sql服务器名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'用户名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'密码&nbsp;'</code><code class="sql plain">,数据库名.dbo.表名)&nbsp;</code></div>
+<div class="line number24 index23 alt1">&nbsp;</div>
+<div class="line number25 index24 alt2"><code class="sql comments">--把本地表导入远程表&nbsp;</code></div>
+<div class="line number26 index25 alt1"><code class="sql keyword">insert</code>&nbsp;<code class="sql plain">openrowset(&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'sql服务器名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'用户名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'密码&nbsp;'</code><code class="sql plain">,数据库名.dbo.表名)&nbsp;</code></div>
+<div class="line number27 index26 alt2"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">本地表&nbsp;</code></div>
+<div class="line number28 index27 alt1">&nbsp;</div>
+<div class="line number29 index28 alt2"><code class="sql comments">--更新本地表&nbsp;</code></div>
+<div class="line number30 index29 alt1"><code class="sql keyword">update</code>&nbsp;<code class="sql plain">b&nbsp;</code></div>
+<div class="line number31 index30 alt2"><code class="sql keyword">set</code>&nbsp;<code class="sql plain">b.列A=a.列A&nbsp;</code></div>
+<div class="line number32 index31 alt1"><code class="sql spaces">&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">openrowset(&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'sql服务器名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'用户名&nbsp;'</code><code class="sql plain">;&nbsp;</code><code class="sql string">'密码&nbsp;'</code><code class="sql plain">,数据库名.dbo.表名)</code><code class="sql keyword">as</code>&nbsp;<code class="sql plain">a&nbsp;</code><code class="sql keyword">inner</code>&nbsp;<code class="sql color1">join</code>&nbsp;<code class="sql plain">本地表&nbsp;b&nbsp;</code></div>
+<div class="line number33 index32 alt2"><code class="sql keyword">on</code>&nbsp;<code class="sql plain">a.column1=b.column1&nbsp;</code></div>
+<div class="line number34 index33 alt1">&nbsp;</div>
+<div class="line number35 index34 alt2"><code class="sql comments">--openquery用法需要创建一个连接&nbsp;</code></div>
+<div class="line number36 index35 alt1">&nbsp;</div>
+<div class="line number37 index36 alt2"><code class="sql comments">--首先创建一个连接创建链接服务器&nbsp;</code></div>
+<div class="line number38 index37 alt1"><code class="sql keyword">exec</code>&nbsp;<code class="sql plain">sp_addlinkedserver&nbsp;&nbsp;&nbsp;</code><code class="sql string">'ITSV&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;</code><code class="sql string">'远程服务器名或ip地址&nbsp;'</code>&nbsp;</div>
+<div class="line number39 index38 alt2"><code class="sql comments">--查询&nbsp;</code></div>
+<div class="line number40 index39 alt1"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code></div>
+<div class="line number41 index40 alt2"><code class="sql keyword">FROM</code>&nbsp;<code class="sql plain">openquery(ITSV,&nbsp;&nbsp;</code><code class="sql string">'SELECT&nbsp;*&nbsp;&nbsp;FROM&nbsp;数据库.dbo.表名&nbsp;'</code><code class="sql plain">)&nbsp;</code></div>
+<div class="line number42 index41 alt1"><code class="sql comments">--把本地表导入远程表&nbsp;</code></div>
+<div class="line number43 index42 alt2"><code class="sql keyword">insert</code>&nbsp;<code class="sql plain">openquery(ITSV,&nbsp;&nbsp;</code><code class="sql string">'SELECT&nbsp;*&nbsp;&nbsp;FROM&nbsp;数据库.dbo.表名&nbsp;'</code><code class="sql plain">)&nbsp;</code></div>
+<div class="line number44 index43 alt1"><code class="sql keyword">select</code>&nbsp;<code class="sql plain">*&nbsp;</code><code class="sql keyword">from</code>&nbsp;<code class="sql plain">本地表&nbsp;</code></div>
+<div class="line number45 index44 alt2"><code class="sql comments">--更新本地表&nbsp;</code></div>
+<div class="line number46 index45 alt1"><code class="sql keyword">update</code>&nbsp;<code class="sql plain">b&nbsp;</code></div>
+<div class="line number47 index46 alt2"><code class="sql keyword">set</code>&nbsp;<code class="sql plain">b.列B=a.列B&nbsp;</code></div>
+<div class="line number48 index47 alt1"><code class="sql keyword">FROM</code>&nbsp;<code class="sql plain">openquery(ITSV,&nbsp;&nbsp;</code><code class="sql string">'SELECT&nbsp;*&nbsp;FROM&nbsp;数据库.dbo.表名&nbsp;'</code><code class="sql plain">)&nbsp;</code><code class="sql keyword">as</code>&nbsp;<code class="sql plain">a&nbsp;&nbsp;</code></div>
+<div class="line number49 index48 alt2"><code class="sql keyword">inner</code>&nbsp;<code class="sql color1">join</code>&nbsp;<code class="sql plain">本地表&nbsp;b&nbsp;</code><code class="sql keyword">on</code>&nbsp;<code class="sql plain">a.列A=b.列A&nbsp;</code></div>
+<div class="line number50 index49 alt1">&nbsp;</div>
+<div class="line number51 index50 alt2"><code class="sql comments">--3、opendatasource/openrowset&nbsp;</code></div>
+<div class="line number52 index51 alt1"><code class="sql keyword">SELECT</code>&nbsp;&nbsp;&nbsp;<code class="sql plain">*&nbsp;</code></div>
+<div class="line number53 index52 alt2"><code class="sql keyword">FROM</code>&nbsp;&nbsp;&nbsp;<code class="sql plain">opendatasource(&nbsp;</code><code class="sql string">'SQLOLEDB&nbsp;'</code><code class="sql plain">,&nbsp;&nbsp;</code><code class="sql string">'Data&nbsp;Source=ip/ServerName;User&nbsp;ID=登陆名;Password=密码&nbsp;'</code>&nbsp;<code class="sql plain">).test.dbo.roy_ta&nbsp;</code></div>
+<div class="line number54 index53 alt1"><code class="sql comments">--把本地表导入远程表&nbsp;</code></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong><a class="replace_word" title="软件测试知识库" href="http://lib.csdn.net/base/softwaretest" target="_blank">测试</a>演示：</strong></p>
+<p>user master;</p>
+<p>exec sp_addlinkedserver &nbsp; '41f0bcc ', ' ', 'SQLOLEDB ', '192.168.7.21'&nbsp;<br>exec sp_addlinkedsrvlogin &nbsp;'41f0bcc ', 'false ',null, 'sa ', 'q1w2e3e3r45tr4t5'&nbsp;</p>
+<p><strong>select * from [41f0bcc].eStoreDB.dbo.V_standard_ORG</strong></p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/gyc19920704/tag/sql/">sql</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6586771,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;b46748b5-1cbf-e511-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/gyc19920704/">可爱的春哥</a><br>
+            <a href="https://home.cnblogs.com/u/gyc19920704/followees/">关注 - 2</a><br>
+            <a href="https://home.cnblogs.com/u/gyc19920704/followers/">粉丝 - 12</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;b46748b5-1cbf-e511-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6586771,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(6586771,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/gyc19920704/p/6586730.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/gyc19920704/p/6586730.html" title="发布于 2017-03-20 10:54">SQL Server里面如何导出包含数据的SQL脚本</a>
+    <br>
+    <a href="https://www.cnblogs.com/gyc19920704/p/6598243.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/gyc19920704/p/6598243.html" title="发布于 2017-03-22 09:45">javascript join以及slice，push函数</a>
+
+</div>
+</div>
+        </div>
+        <p class="postfoot">
+            posted on 
+<span id="post-date">2017-03-20 10:57</span>&nbsp;
+<a href="https://www.cnblogs.com/gyc19920704/">可爱的春哥</a>&nbsp;
+阅读(<span id="post_view_count">13790</span>)&nbsp;
+评论(<span id="post_comment_count">1</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=6586771" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(6586771);return false;">收藏</a>
+        </p>
+    </div>
+</div>
+
+<script src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 264220, cb_blogApp = 'gyc19920704', cb_blogUserGuid = 'b46748b5-1cbf-e511-9fc1-ac853d9f53cc';
+    var cb_entryId = 6586771, cb_entryCreatedDate = '2017-03-20 10:57', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<a name="评论"></a>
+<div id="comments">
+<h3>评论</h3>
+	<div class="feedbackNoItems"></div>
+			<div class="post">
+				<h2>
+					
+<a href="https://www.cnblogs.com/gyc19920704/p/6586771.html#4232090" class="layer">#1楼</a>
+<a name="4232090" id="comment_anchor_4232090"></a>
+
+        <span id="comment-maxId" style="display:none">4232090</span>
+        <span id="comment-maxDate" style="display:none">2019/4/16 上午9:40:02</span>
+
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</h2>
+				
+<div id="comment_body_4232090" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    你好  在不？<br>有事请教  望指教
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4232090, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4232090, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4232090_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1279187/20171114150322.png
+        </span>
+
+				<div class="postfoot">
+					
+<span class="comment_date">2019-04-16 09:40</span>
+
+ | 
+
+            <a id="a_comment_author_4232090" href="https://www.cnblogs.com/pyf97/" target="_blank">求路问道</a>
+
+				</div>
+			</div>
+</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/gyc19920704/p/6586771.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/gyc19920704/p/6586771.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-ucancode&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/season?fromSource=gwzcw.3422970.3422970.3422970&amp;utm_medium=cpc&amp;utm_id=gwzcw.3422970.3422970.3422970" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【活动】腾讯云服务器推出云产品采购季 1核2G首年仅需99元</a><br><a href="https://developer.aliyun.com/ask/257928?utm_content=g_1000088948" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】精品问答：精品问答：Python 技术 1000 问</a><br><a href="https://developer.aliyun.com/article/721818?utm_content=g_1000088934" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】20本必看的阿里精品免费电子书</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="CPvzlMPGuegCFQaclgodwKcGEA"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-google-container-id="1" data-load-complete="true" src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="SQL Server 创建链接服务器" href="https://www.cnblogs.com/gaizai/archive/2010/09/09/1821071.html" target="_blank" onclick="clickRecomItmem(1821071)">SQL Server 创建链接服务器</a><br>·  <a title="SQL Server跨库查询" href="https://www.cnblogs.com/xulele/p/5327939.html" target="_blank" onclick="clickRecomItmem(5327939)">SQL Server跨库查询</a><br>·  <a title="SQL Server连接SQL Server、SQL Server连接ORACLE  链接服务器" href="https://www.cnblogs.com/qfb620/p/4444408.html" target="_blank" onclick="clickRecomItmem(4444408)">SQL Server连接SQL Server、SQL Server连接ORACLE  链接服务器</a><br>·  <a title="sql server 数据库创建链接服务器访问另外一个sql server 数据库" href="https://www.cnblogs.com/527289276qq/p/6097570.html" target="_blank" onclick="clickRecomItmem(6097570)">sql server 数据库创建链接服务器访问另外一个sql server 数据库</a><br>·  <a title="SQL Server 创建链接服务器" href="https://www.cnblogs.com/wanshutao/p/4137994.html" target="_blank" onclick="clickRecomItmem(4137994)">SQL Server 创建链接服务器</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/6586771">更多推荐...</a><div id="cnblogs_t5"><a href="https://developer.aliyun.com/article/714139?utm_content=g_1000088940" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T5-阿里云开发者社区&#39;)">阿里专家五年方法论总结！技术人如何实现职业突破？</a></div></div></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CPzzlMPGuegCFQaclgodwKcGEA">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/658491/" target="_blank">疫情蔓延，任正非：华为员工在世界各地保证不断网</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658490/" target="_blank">美股连续反弹，道指又涨1300点，苹果涨5%</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658489/" target="_blank">日本5G本周大爆发：两大运营商启动服务 软银明日商用</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658488/" target="_blank">腾讯云与济南历城区进行战略合作签约 腾讯云启产业基地将落户济南</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658487/" target="_blank">Java 14 来了！</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+    <li>
+        <a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+
+    </li>
+    <li>
+        
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/gyc19920704/">
+首页</a>
+
+    </li>
+    <li>
+        
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+
+    </li>
+    <li>
+        
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8F%AF%E7%88%B1%E7%9A%84%E6%98%A5%E5%93%A5">
+联系</a>
+    </li>
+    <li>
+        
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/gyc19920704/rss/">
+订阅</a>
+        
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/gyc19920704/rss/">
+    <img src="./SQLServer中跨服务器跨数据库之间的数据操作 - 可爱的春哥 - 博客园_files/xml.gif" alt="订阅">
+</a>
+    </li>
+    <li>
+        
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+
+    </li>
+</ul>
+
+
+<div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/02/27&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2020年3月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/04/27&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                        <td class="CalWeekendDay" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                        <td class="" align="center">
+                            5
+                        </td>
+                        <td class="" align="center">
+                            6
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        7
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            14
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            21
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                27
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            28
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            4
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                9
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                10
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            11
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>
+
+<div id="sidebar_news" class="newsItem"><meta name="vs_showGrid" content="False">
+<h3>公告</h3>
+
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/gyc19920704/">
+            可爱的春哥
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/gyc19920704/" title="入园时间：2016-01-20">
+            4年2个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/gyc19920704/followers/">
+            12
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/gyc19920704/followees/">
+            2
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;b46748b5-1cbf-e511-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        <script>getFollowStatus('b46748b5-1cbf-e511-9fc1-ac853d9f53cc');</script>
+    </div>
+</div>
+
+</div>
+
+<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/gyc19920704/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/gyc19920704/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/gyc19920704/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/gyc19920704/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/gyc19920704/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+<h3>我的标签</h3>
+<div id="MyTag">
+    <ul>
+        
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/Python/">Python</a>(49)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/C%23/">C#</a>(44)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/VB/">VB</a>(41)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/sql/">sql</a>(13)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/CIC/">CIC</a>(6)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/CRMEasy/">CRMEasy</a>(5)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/Linux/">Linux</a>(5)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/JavaScript/">JavaScript</a>(3)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/Windows/">Windows</a>(2)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/gyc19920704/tag/WINDOWS%202003%20%20FTP%E6%90%AD%E5%BB%BA/">WINDOWS 2003  FTP搭建</a>(1)
+        </li>
+            <li>
+                <a href="https://www.cnblogs.com/gyc19920704/tag/">更多</a>
+            </li>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2019/05.html" rel="" target="">
+    2019年5月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2019/03.html" rel="" target="">
+    2019年3月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2018/01.html" rel="" target="">
+    2018年1月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2017/03.html" rel="" target="">
+    2017年3月(29)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2016/06.html" rel="" target="">
+    2016年6月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2016/05.html" rel="" target="">
+    2016年5月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2016/04.html" rel="" target="">
+    2016年4月(60)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2016/03.html" rel="" target="">
+    2016年3月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/gyc19920704/archive/2016/01.html" rel="" target="">
+    2016年1月(20)
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/gyc19920704/p/6510611.html#4470941">1. Re:用C#实现DES加密解密封装</a></li>
+                    <li class="recent_comment_body">我是编程小白，请问这个项目的建立步骤是怎么搞得。。。谢谢。。。</li>
+                    <li class="recent_comment_author">--出出</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/gyc19920704/p/6586771.html#4232090">2. Re:SQLServer中跨服务器跨数据库之间的数据操作</a></li>
+                    <li class="recent_comment_body">你好  在不？<br>有事请教  望指教</li>
+                    <li class="recent_comment_author">--求路问道</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/gyc19920704/p/5415680.html#4120885">3. Re:CRMEasy知识库点击无法弹出窗体问题</a></li>
+                    <li class="recent_comment_body">怎么进行注册？ 我的系统是64位的，是不是需要放在C:\Windows\SysWoW64路径里面？</li>
+                    <li class="recent_comment_author">--Hzwzzzzzzzz</li>
+                    <li class="recent_comment_title"><a href="http://www.cnblogs.com/gyc19920704/p/5480721.html#3509664">4. Re:XML 总结</a></li>
+                    <li class="recent_comment_body">@ 可爱的春哥靠，不知道放上来让我看看...</li>
+                    <li class="recent_comment_author">--王腾飞</li>
+                    <li class="recent_comment_title"><a href="http://www.cnblogs.com/gyc19920704/p/5480721.html#3509627">5. Re:XML 总结</a></li>
+                    <li class="recent_comment_body">@ 王腾飞早就写了，在笔记本上了.......</li>
+                    <li class="recent_comment_author">--可爱的春哥</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/6509926.html">
+                            1. C#中[STAThread]的作用(18632)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/5430964.html">
+                            2. FindWindow用法(13988)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/6586771.html">
+                            3. SQLServer中跨服务器跨数据库之间的数据操作(13790)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/6510611.html">
+                            4. 用C#实现DES加密解密封装(8159)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/5437831.html">
+                            5. C#中对EXCEL保存的SAVEAS方法说明(4567)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/5480721.html">
+                            1. XML 总结(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/5619239.html">
+                            2. VM错误解决：This Virtual Machine Appears To Be In Use(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/6510611.html">
+                            3. 用C#实现DES加密解密封装(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/6586771.html">
+                            4. SQLServer中跨服务器跨数据库之间的数据操作(1)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/gyc19920704/p/5144366.html">
+                            5. 安装CRMEasy步骤(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/gyc19920704/p/5437831.html">
+                                1. C#中对EXCEL保存的SAVEAS方法说明(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/gyc19920704/p/6509926.html">
+                                2. C#中[STAThread]的作用(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/gyc19920704/p/6510611.html">
+                                3. 用C#实现DES加密解密封装(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/gyc19920704/p/6645895.html">
+                                4. 理解JavaScript里的 [].forEach.call() 写法(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/gyc19920704/p/5415680.html">
+                                5. CRMEasy知识库点击无法弹出窗体问题(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2020 可爱的春哥
+<br><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+</p>
+
+
+</div>
+</div>
+
+
+    
+
+</body></html>

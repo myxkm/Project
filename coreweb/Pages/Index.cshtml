@@ -1,0 +1,68 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <button id="login" style="display:none">
+            登入
+        </button>
+
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+    function getRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    var redicrect_url = getRequest().redicrect_url
+    var token = localStorage.getItem("token_local");
+    if (token) {
+         if (redicrect_url) 
+        window.location.href = redicrect_url + "?token=" + token
+    }
+    else {
+        $("#login").css("display", "block")
+    }
+    $("#login").click(function () { 
+        //获取令牌
+        $.get("https://localhost:44389/oauth", { user: "user_xkm", password: "1#" }).done(function (token) {
+            if (token.code == 200) {
+                localStorage.setItem("token_local", token.data.token);
+                if (redicrect_url) {
+                    window.location.href = redicrect_url + "?token=" + token.data.token
+                }
+                console.log(redicrect_url)
+
+            }
+
+        });
+    })
+
+    //单点登入 认证中心
+            //设置HTTP头
+            //$.ajaxSetup({
+            //    beforeSend: function (xhr) {
+            //        if (localStorage.getItem("token") !== null) {
+            //            xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem("token"));
+            //        }
+            //    }
+            //});
+            //$.post("http://localhost:58290/api/WeatherForecast/post").done(function (token) {
+            //    console.log(token)
+            //});
+
+
+</script>

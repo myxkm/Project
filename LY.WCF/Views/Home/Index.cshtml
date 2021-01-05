@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<audio autoplay="autoplay" height="10" width="10">
+    <source src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text=23" type="audio/mpeg">
+    <embed height="10" width="10" src="http://tts.baidu.com/text2audio?text=23">
+</audio>
+<div class="jumbotron">
+    <h1>ASP.NET1</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<script src="http://cdn.javanx.cn/wp-content/themes/lensnews2.2/js/jquery.min.js?ver=3.1.1"></script>
+
+<script>
+    function audioPlay(text) {
+        var zhText = text;
+        zhText = encodeURI(zhText);
+        var audio = "<audio autoplay=\"autoplay\">" + "<source src=\"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text=" + zhText + "\" type=\"audio/mpeg\">" + "<embed height=\"0\" width=\"0\" src=\"http://tts.baidu.com/text2audio?text=" + zhText + "\">" + "</audio>";
+        $('.jumbotron').append(audio);
+    }
+
+
+    audioPlay('我是web秀');
+</script>

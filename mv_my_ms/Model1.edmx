@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LY_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="mv_error_log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pageindex" Type="bigint" Nullable="false" />
+          <Property Name="error_msg" Type="nvarchar" MaxLength="400" />
+          <Property Name="isdispose" Type="bit" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="sleep" Type="int" Nullable="false" />
+        </EntityType>
+        <Function Name="mv_mysql_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="createtable" Type="nvarchar" Mode="In" />
+          <Parameter Name="pageindex" Type="int" Mode="In" />
+          <Parameter Name="pagesize" Type="int" Mode="In" />
+        </Function>
+        <Function Name="mv_mysql_data_count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="LY_DBModelStoreContainer">
+          <EntitySet Name="mv_error_log" EntityType="Self.mv_error_log" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LY_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LY_DBEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="mv_mysql_data_count" ReturnType="Collection(Int64)" />
+          <FunctionImport Name="mv_mysql_data">
+            <Parameter Name="createtable" Mode="In" Type="String" />
+            <Parameter Name="pageindex" Mode="In" Type="Int32" />
+            <Parameter Name="pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="mv_error_log" EntityType="LY_DBModel.mv_error_log" />
+        </EntityContainer>
+        <EntityType Name="mv_error_log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pageindex" Type="Int64" Nullable="false" />
+          <Property Name="error_msg" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="isdispose" Type="Boolean" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="sleep" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LY_DBModelStoreContainer" CdmEntityContainer="LY_DBEntities" >
+          <FunctionImportMapping FunctionImportName="mv_mysql_data_count" FunctionName="LY_DBModel.Store.mv_mysql_data_count" />
+          <FunctionImportMapping FunctionImportName="mv_mysql_data" FunctionName="LY_DBModel.Store.mv_mysql_data" />
+          <EntitySetMapping Name="mv_error_log">
+            <EntityTypeMapping TypeName="LY_DBModel.mv_error_log">
+              <MappingFragment StoreEntitySet="mv_error_log">
+                <ScalarProperty Name="sleep" ColumnName="sleep" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="isdispose" ColumnName="isdispose" />
+                <ScalarProperty Name="error_msg" ColumnName="error_msg" />
+                <ScalarProperty Name="pageindex" ColumnName="pageindex" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

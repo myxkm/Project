@@ -1,0 +1,120 @@
+﻿.upFile div{border:0px solid blue}
+.upFile {width:486px;  position:relative; margin-left:5px;border:0px solid red;  font-size:12px; background:url(../images/swfupload.gif1) no-repeat; }
+.upFile p { margin:0; padding:0; }
+.upFile .lt { position:relative; float:left; width:100%;  padding:4px;background:#f9f9f9; border:1px solid #ddd ;}
+.upFile .lt p { height:26px; line-height:26px; overflow:hidden; border-bottom:1px solid #fff; color:#000; background:none; }
+.upFile .lt ul { background:#fff;position:relative; z-index:2; width:100%; max-height:300px; _height:expression(this.scrollHeight > 300 ? "300px" : "auto");overflow-y:auto; }
+.upFile .lt li { position:relative; z-index:2; float:left; clear:left; width:100%; height:25px; overflow:hidden; text-indent:5px; text-align:left; background:url(../images/dotted_.gif) repeat-x left bottom; }
+.upFile .lt li span { position:absolute; left:0; top:0; z-index:2; display:block; height:20px;line-height:20px; padding-top:5px; font-weight:normal; color:#666; }
+.upFile .lt li span.name { width:315px;border:0px solid red;overflow:hidden }
+.upFile .lt li span.size { left:320px; width:70px; }
+.upFile .lt li em {border:0px solid red; position:absolute; left:390px; top:5px; z-index:2; display:block; width:20px; height:20px; overflow:hidden; text-indent:-999em; background:url(../images/swfupload.gif) no-repeat 5px -325px; }
+.upFile .lt .initial { background-position:-35px -324px; cursor:pointer; }
+.upFile .lt .loading { background-position:-14px -324px; }
+.upFile .lt .end { background-position:5px -324px; }
+.upFile .lt .error { background-position:-205px -323px; }
+.upFile .lt li p { position:relative; z-index:1; float:left; width:0; border:0; height:24px; margin-bottom:1px; border-right:2px solid #8abb64; margin-left:-2px; background:#d9f1c7; }
+.upFile .rt { position:relative; float:left; width:10px; height:100%; padding-top:15px; }
+
+
+.allFiles {  margin:10px 0 0 0;  padding:4px ; width:100%}
+/*.allFiles div.box { position:relative; width:465px; min-height:55px; height:auto!important; height:55px; padding:8px 8px 0; border:1px solid #CCCCCC;font-size:12px;font-weight:normal }*/
+.allFiles div.box { position:relative; width:100%; min-height:30px; height:auto!important; height:30px; line-height:30px; padding:0; border:1px solid #CCCCCC;font-size:12px;font-weight:normal }
+.allFiles div h3 { padding:1px 0 0 22px; font-size:12px; color:#666; background:url(../images/divFileProgressContainerICO.gif) no-repeat -60px 0;  font-weight:normal}
+.allFiles div.ok h3 { background-position:-20px -40px;}
+.allFiles div.stop h3 { background-position:-40px -20px;}
+.allFiles div.error h3 { background-position:0 -60px;}
+.allFiles ol { margin:.5em .5em 0; }
+.allFiles ol li { padding-left:1.3em; margin:0 0 0.6em 1.5em; color:#666; background:url(../images/swfupload.gif) no-repeat -210px -324px; }
+.allFiles ol li em { margin:0 .2em; text-decoration:blink; font-style:normal; color:#f96; }
+.allFiles span.loading,
+.allFiles span.loading span { display:block; height:12px; margin-bottom:5px; overflow:hidden; background:url(../images/divFileProgressContainer_.gif) repeat-x 0 -12px; }
+.allFiles span.loading span { margin:0; background-position:0 0; }
+.allFiles p { margin-bottom:5px; color:#999; }
+.allFiles p strong { font-weight:normal; color:#666; }
+.allFiles p.fllFiles_help { margin-left:2em; color:#999; }
+#allFiles_p1,#allFiles_p2,#allFiles_p3{ padding-left:8px;}
+#allFiles_p2{ display:none }
+.allFiles h3
+{
+    float:none;
+    border:0px;
+}
+
+#count
+{
+    background: none repeat scroll 0 0 #E4E4E4;
+    border-color: -moz-use-text-color #CCCCCC #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    border-left: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    z-index: 2;
+    padding:4px;
+    width:100%;
+    display:block;
+    height:26px;
+    line-height:26px;
+ }
+
+#delList,#Upload 
+{ 
+position:relative;
+display:inline-block; 
+width:100px; height:35px; line-height:36px!important; 
+line-height:38px; overflow:hidden; text-indent:30px; margin:0 0 4px 11px;  
+text-decoration:none; color:#999; 
+background:url(../images/swfuploadButton.gif) no-repeat; 
+border:0px solid red;
+}
+
+#delList,#Upload1
+{ 
+position:relative;
+display:inline-block; 
+width:100px; height:35px; line-height:36px!important; 
+line-height:38px; overflow:hidden; text-indent:30px; margin:0 0 4px 11px;  
+text-decoration:none; color:#999; 
+background:url(../images/swfuploadButton.gif) no-repeat; 
+border:0px solid red;
+}
+
+#delList { background-position:-100px 0; display:none }
+
+#delList:hover { background-position:-100px -35px; }
+#delList:active { background-position:-100px -70px; }
+#delList.disabled { background-position:-100px -105px!important; }
+
+#Upload.disabled { background-position:-100px -105px!important; }
+
+.info td
+{
+	margin-left:20px;
+	
+	}
+	
+.uploadSuccess
+{
+	line-height:25px;
+	border:1px solid #dddddd;
+	
+	}
+
+ .selectClass
+{
+    text-align: left;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.selectClass li
+{
+    padding: 3px 0px 3px 0px;
+    line-height: 15px;
+    text-align: left;
+    margin: 0;
+    width: 15%;
+    float: left;
+}

@@ -1,0 +1,60 @@
+﻿{
+	"status": 0,
+	"environment": "Production",
+	"receipt": {
+		"receipt_type": "Production",
+		"adam_id": 2341443613,
+		"app_item_id": 2234443613,
+		"bundle_id": "com.xxxxx.xxxxx",
+		"application_version": "1",
+		"download_id": 23456572706673,
+		"version_external_ident ifier": 821223402,
+		"receipt_creation_date": "2017-01-25 00:52:37 Etc/GMT",
+		"receipt_creation_date_ms": "3333897657000",
+		"receipt_creation_date_pst": "2017-01-25 17:57:37 America/Los_Angeles",
+		"request_date": "2017-01-26 00:57:38 Etc/GMT",
+		"request_date_ms": "1445897657000",
+		"request_date_pst": "2017-05-29 17:57:38 America/Los_Angeles",
+		"original_purchase_date": "2016-01-25 15:37:18 Etc/GMT",
+		"original_purchase_ date_ms": "145234568000",
+		"original_purchase_date_pst": "2016-01-25 07:37:18 America/Los_Angeles",
+		"original_application_version": "12",
+		"in_app": [{
+			"quantity": "1",
+			"product_id": "xxxxxxxxx",
+			"transaction_id": "110000290198443",
+			"original_transaction_id": "110000290198443",
+			"purchase_date": "2017-01-26 00:23:36 Etc/GMT",
+			"purchase_date_ms": "1496105856000",
+			"purchase_date_pst": "2017-01-26 00:35:30 America/Los_Angeles",
+			"original_purchase_date": "2017-01-26 00:57:36 Etc/GMT",
+			"original_purchase_date_ms": "14347896000",
+			"original_purchase_date_pst": "2017-01-25 17:57:36 America/Los_Angeles",
+			"is_trial_period": "false"
+		},{
+			"quantity": "1",
+			"product_id": "xxxxxxxxx",
+			"transaction_id": "110000290198443",
+			"original_transaction_id": "110000290198443",
+			"purchase_date": "2017-11-26 00:23:36 Etc/GMT",
+			"purchase_date_ms": "1496105856000",
+			"purchase_date_pst": "2017-11-26 00:35:30 America/Los_Angeles",
+			"original_purchase_date": "2017-11-26 00:57:36 Etc/GMT",
+			"original_purchase_date_ms": "14347896000",
+			"original_purchase_date_pst": "2017-11-25 17:57:36 America/Los_Angeles",
+			"is_trial_period": "false"
+		},{
+			"quantity": "1",
+			"product_id": "xxxxxxxxx",
+			"transaction_id": "110000290198443",
+			"original_transaction_id": "110000290198443",
+			"purchase_date": "2017-10-26 00:23:36 Etc/GMT",
+			"purchase_date_ms": "1496105856000",
+			"purchase_date_pst": "2017-10-26 00:35:30 America/Los_Angeles",
+			"original_purchase_date": "2017-10-26 00:57:36 Etc/GMT",
+			"original_purchase_date_ms": "14347896000",
+			"original_purchase_date_pst": "2017-10-25 17:57:36 America/Los_Angeles",
+			"is_trial_period": "false"
+		}]
+	}
+}

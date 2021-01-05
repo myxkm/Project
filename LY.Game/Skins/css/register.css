@@ -1,0 +1,109 @@
+﻿.register-panel a,.m-box a{color:#406eba;outline:none;}.register-panel a:hover,.m-box a:hover{color:#ee8c18;}
+.register-panel { height: 590px;margin-top:100px; }
+.register-panel .register-left { padding: 60px 0 60px 240px;background:#fff;float: left;
+    height: 590px; }
+.register-right{background-color:#f5f5f5;float:left;height:590px;padding: 60px 0 60px 0px;float:left;width:270px;text-align: center;}
+body {background:url(../images/bg_reg.jpg); }
+
+/* 统一调用背景图 */
+.input-item,.input-item div.iptctn,.u-btn,.u-btn span{background:url(../images/slide-door.png?201307221344) no-repeat 9999px 9999px;}
+.u-btn-img span em,.u-step ol li em,.input-tips em,.u-tips2 em,.u-tips4 em,.u-tips_ad em,.m-rmd em,.u-tips3 i,.u-pwdStrength,.u-new,.m-ipt-icon .iptIcon{background:url(../images/icon_reg.png?201308051112) no-repeat 9999px 9999px;}
+.u-gift span{background:url(/images2/adv/gift_20150811100.png) no-repeat 9999px 9999px;}
+/* 元件 */
+.form-options {margin-bottom:30px;position:relative;}
+.input-item,.input-item input{font-size:20px;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53; }
+.input-item{position:relative;display:inline-block;*display:inline;*zoom:1;width:376px;height:54px;overflow:hidden;padding-left:18px;background-position:0 0;margin-right:30px;}
+.input-item div.iptctn{height:48px;padding:3px 18px 3px 0;background-position:right -54px;}
+.input-item label{position:absolute;width:378px;height:54px;line-height:54px;top:0;left:0;padding-left:18px;color:#c1c1c1;cursor:text;}
+.input-item input{width:100%;height:48px;line-height:48px\9;*height:47px;*line-height:47px;border:none;background:none;}
+.input-item em{position:relative;*bottom:12px;line-height:1em;vertical-align:middle;font-weight:normal;color:#323232;}
+.input-item-foc{background-position:0 -120px;}
+.input-item-foc div.iptctn{background-position:right -174px;}
+.input-item-err{background-position:0 -240px;}
+.input-item-err div.iptctn{background-position:right -294px;}
+/* placeholder 组件样式 */
+.iptctn{position:relative;}
+.iptctn .placeholder{position:absolute;z-index:2;left:0;top:15px;_top:17px;color:#c1c1c1;}
+.m-ipt-icon .placeholder{left:32px;}
+
+
+.input-tips {float:left; }
+.form-options .input-item,.form-options .u-tips{float:left;}
+.form-options-code .input-item input{width:120px;}
+.form-options-code img{position:absolute;top:8px;left:200px;cursor:pointer;}
+.form-options-code .u-btn{position:absolute;top:2px;left:337px;}
+.form-options-code .u-btn,.m-ipt-code .u-btn span{height:50px;}
+.form-options-code .u-btn-img:hover em{background-position:-120px 0;}
+.form-options-code .u-btn-img:active em{background-position:-150px 0;}
+
+.u-btn,.u-btn span{display:inline-block;*display:inline;*zoom:1;height:51px;}
+.u-btn{padding-left:16px;background-position:0 -360px;}
+.u-btn span{padding-right:16px;line-height:51px;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53;font-size:18px;color:#323232;background-position:right -420px;}
+.u-btn:hover{background-position:0 -480px;}
+.u-btn:hover span{background-position:right -540px;}
+.u-btn:active{background-position:0 -600px;}
+.u-btn:active span{background-position:right -660px;}
+.u-btn-img span em{position:relative;display:block;}
+.u-btn-img-code span em{width:23px;height:22px;top:14px;background-position:-90px 0;}
+.u-btn-img-select span em{width:23px;height:22px;top:14px;background-position:-180px 0;}
+
+.u-btn2,.u-btn2:hover,.u-btn2:active{color:#FFF;}
+.u-btn2{display:block;width:390px;height:50px;line-height:50px;border:none;overflow:hidden;text-align:center;background:#69b3f2;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53;font-size:26px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;}
+.u-btn2:hover{background:#7cbdf5;}
+.u-btn2:active{background:#59a4e4;}
+.u-btn2-db{float:left;width:191px;margin-right:10px;}
+/* 加important防止皮肤覆盖 */
+.u-btn2-dis{color:#717171 !important;background:#eee !important;}
+.u-btn2-dis:hover{color:#909090 !important;background:#f2f2f2 !important;}
+.u-btn2-dis:active{color:#717171 !important;background:#e3e3e3 !important;}
+
+::-moz-placeholder {
+    color: #c1c1c1;
+	padding-top: 2px;
+    opacity: 1!important;
+}
+:-ms-input-placeholder {
+    color: #c1c1c1;
+	padding-top: 2px;
+}
+::-webkit-input-placeholder {
+    color: #c1c1c1;
+	padding-top: 2px;
+}
+
+.input-tips{height:54px;line-height:54px;font-size:0;_font-size:44px;/*IE6下font-size给一个比height较小的值,可以修正单行不居中的问题*/}
+.input-tips span,.input-tips em{display:inline-block;vertical-align:middle;line-height:1.5em;font-size:12px;}
+.input-tips span{width:215px;_width:270px;/*word-break:break-all;*/word-wrap:break-word;overflow:hidden;color:#949494;}
+.input-tips em{width:17px;height:17px;margin-right:8px;}
+.input-tips-ok em{background-position:0 0;}
+.input-tips-warn em{background-position:-30px 0;}
+.input-tips-err em{background-position:-60px 0;}
+.input-tips-err span{color:#dd6f75;}
+.input-tips-loading em{width:24px;height:24px;background:url(/images2/ajax-loader.gif?20130730);}
+.u-check{color:#949494;}
+.u-check input{margin-right:0.5em;*margin-right:0;vertical-align:top;+vertical-align:-2px;_vertical-align:0;}
+/* 统一清除浮动 */
+.form-options:after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
+.form-options{zoom:1;}
+#regEmail {margin-bottom:20px; }
+
+.re-main {width:990px;margin:0 auto; }
+.m-box{padding:40px 40px 60px 40px;background:#fff;margin-top:50px;}
+.m-box .boxHd{height:33px;overflow:hidden;margin-bottom:24px;border-bottom:1px dotted #c8c8c8;font-size:20px;font-weight:normal;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53;color:#323232;}
+.m-box .boxBd form,.m-box .boxBd .statusBox{margin:40px auto 0 200px;}
+.u-tips2 i{font-size:12px;color:#949494;}
+.u-tips2{height:54px;line-height:54px;font-size:0;_font-size:44px;/*IE6下font-size给一个比height较小的值,可以修正单行不居中的问题*/}
+.u-tips2 span,.u-tips2 em{display:inline-block;vertical-align:middle;line-height:1.5em;font-size:22px;}
+.u-tips2 span{/*word-break:break-all;*/word-wrap:break-word;overflow:hidden;color:#333;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53;}
+.u-tips2 em{width:50px;height:50px;margin-right:20px;}
+.u-tips2-ok em{background-position:0 -30px;}
+.u-tips2-warn em{background-position:-60px -30px;}
+.u-tips2-err em{background-position:-120px -30px;}
+.u-tips2-err span{color:#dd6f75;}
+.u-tips2-okEmail em{width:63px;height:51px;background-position:-180px -30px;}
+
+.u-tips2 i{font-size:12px;color:#949494;}
+.f-ff0{font-family:arial,\5b8b\4f53;}
+.noticeBox{width:100%; margin-top:40px; padding-top:40px; border-top:1px dotted #c7c8c8;}
+.noticeBox h3,.noticeBox ol li{margin-bottom:17px;color:#949494;}
+.noticeBox h3{font-size:14px;}

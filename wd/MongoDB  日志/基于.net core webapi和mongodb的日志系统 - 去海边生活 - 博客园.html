@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://www.cnblogs.com/betterlife/p/9676033.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="开发环境vs2017，.NET Core2.1, 数据写入到mongodb。思路就是1.提供接口写入日志，2.基于接口封装类库。3.引入类库使用 源码在最后 为什么要写它 很多开源项目像nlog、lo">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园</title>
+    
+    <link rel="stylesheet" href="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/bundle-coffee.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/bundle-coffee-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/betterlife/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/betterlife/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/betterlife/wlwmanifest.xml">
+    <script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/amp4ads-host-v0.js.下载"></script><script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/pubads_impl_rendering_2020030501.js.下载"></script><script async="" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/encoder.js.下载"></script><script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 192895;
+        var currentBlogApp = 'betterlife';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var skinName = 'coffee';
+    </script>
+    
+    
+    
+<link rel="preload" href="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/f.txt"></script><script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/pubads_impl_2020030501.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-37/html/container.html"></head>
+<body>
+    <a name="top"></a>
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/betterlife/"><img id="blogLogo" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/betterlife/">海边散步</a>
+</h1>
+<h2>
+
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/betterlife/">
+首页</a>
+</li>
+	<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%8E%BB%E6%B5%B7%E8%BE%B9%E7%94%9F%E6%B4%BB">
+联系</a></li>
+	<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+	<li>
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/betterlife/rss/">
+订阅</a>
+	
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/betterlife/rss/">
+    <img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/xml.gif" alt="订阅">
+</a></li>
+</ul>
+
+
+
+			<div class="blogStats">
+				
+				<!--done-->
+随笔- 
+32&nbsp;
+文章- 
+0&nbsp;
+评论- 
+10&nbsp;
+
+
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/betterlife/p/9676033.html">基于.net core webapi和mongodb的日志系统</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p>开发环境vs2017，.NET Core2.1, 数据写入到mongodb。思路就是1.提供接口写入日志，2.基于接口封装类库。3.引入类库使用</p>
+<p>源码在最后</p>
+<p><strong>为什么要写它</strong></p>
+<p>很多开源项目像nlog、log4net、elk、exceptionless等都挺好的。就是除了引入所需类库，还要在项目中添加配置，不喜欢。elk在分布式海量数据收集和检索方面可能更能发挥它的优势，单纯记日志也可以，exceptionless就是基于elk的。就想着写一个简单易用的、可以发邮件报警的，直接引入类库就能用的一个记日志工具，所有的配置信息和入库都交给web api。这是当时问的问题，https://q.cnblogs.com/q/109489/。干脆就实现了先</p>
+<p>接下里的代码可能有很多可以优化的地方，如果有些地方觉得不妥或者可以用更好的方式实现或组织代码，请告诉说，我改。另外实现完的接口没有加访问限制，先默认内网使用，当然有热心网友给出实现的话就更好了，像ip限制或者签名等等(已改，http basic Authorization进行认证)</p>
+<p><strong>一、实现Web Api</strong></p>
+<ul>
+<li>&nbsp;新建.net core web api项目 【LogWebApi】</li>
+</ul>
+<p>因为要发邮件和写入mongodb，先改配置文件appsettings.json</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>{
+  "ConnectionStrings": {
+    "ConnectionString": "mongodb://yourmongoserver",
+    "Database": "logdb",
+    "LogCollection": "logdata"
+  },
+  "AllowedHosts": "*",
+  "AppSettings": {
+    "SendMailInfo": {
+      "SMTPServerName": "smtp.qiye.163.com",
+      "SendEmailAdress": "发送人邮箱",
+      "SendEmailPwd": "",
+      "SiteName": "邮件主题",
+      "SendEmailPort": "123"
+    }
+  }
+}</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<ul>
+<li>实现依赖注入获取配置文件信息</li>
+</ul>
+<p>创建目录结构如下图</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919153536967-1336343169.png" alt=""></p>
+<p>AppSettings类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;8507c80f-ea46-4b10-bad7-6e374e3f52bb&#39;)"><img id="code_img_closed_8507c80f-ea46-4b10-bad7-6e374e3f52bb" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: inline;"><img id="code_img_opened_8507c80f-ea46-4b10-bad7-6e374e3f52bb" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;8507c80f-ea46-4b10-bad7-6e374e3f52bb&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8507c80f-ea46-4b10-bad7-6e374e3f52bb" class="cnblogs_code_hide" style="display: none;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> AppSettings
+    {
+        </span><span style="color: #0000ff;">public</span> SendMailInfo SendMailInfo { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+    }
+    </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> SendMailInfo
+    {
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> SMTPServerName { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> SendEmailAdress { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> SendEmailPwd { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> SiteName { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> SendEmailPort { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: inline;">View Code</span></div>
+<p>DBSettings类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;02697d33-de1e-438e-a908-414036b32e0a&#39;)"><img id="code_img_closed_02697d33-de1e-438e-a908-414036b32e0a" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_02697d33-de1e-438e-a908-414036b32e0a" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;02697d33-de1e-438e-a908-414036b32e0a&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_02697d33-de1e-438e-a908-414036b32e0a" class="cnblogs_code_hide">
+<pre><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+    <span style="color: #808080;">///</span><span style="color: #008000;"> 数据库配置信息
+    </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+    <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> DBSettings
+    {
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> mongodb connectionstring
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> ConnectionString { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> mongodb database
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Database { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 日志collection
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> LogCollection { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+    }</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;接下来Here is how we modify Startup.cs to inject Settings in the Options accessor model:</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;8a96d4d5-b8e7-428e-81f9-ae969c8eb9c8&#39;)"><img id="code_img_closed_8a96d4d5-b8e7-428e-81f9-ae969c8eb9c8" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_8a96d4d5-b8e7-428e-81f9-ae969c8eb9c8" class="code_img_opened" style="" onclick="cnblogs_code_hide(&#39;8a96d4d5-b8e7-428e-81f9-ae969c8eb9c8&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8a96d4d5-b8e7-428e-81f9-ae969c8eb9c8" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> ConfigureServices(IServiceCollection services)
+        {            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.Configure</span>&lt;DBSettings&gt;(Configuration.GetSection(<span style="color: #800000;">"</span><span style="color: #800000;">ConnectionStrings</span><span style="color: #800000;">"</span>));<span style="color: #008000;">//</span><span style="color: #008000;">数据库连接信息</span>
+            services.Configure&lt;AppSettings&gt;(Configuration.GetSection(<span style="color: #800000;">"</span><span style="color: #800000;">AppSettings</span><span style="color: #800000;">"</span>));<span style="color: #008000;">//</span><span style="color: #008000;">其他配置信息            </span>
+<span style="color: #000000;">
+        }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>在项目中将通过IOptions 接口来获取配置信息，后面看代码吧</p>
+<div class="cnblogs_code">
+<pre>IOptions&lt;AppSettings&gt;<span style="color: #000000;">
+IOptions</span>&lt;DBSettings&gt;</pre>
+</div>
+<p>配置文件信息获取算是准备完了</p>
+<ul>
+<li>创建日志信息Model</li>
+</ul>
+<p>在Model文件夹下创建类LogEventData，也就是存到mongodb的信息</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;5dbea430-9234-468e-8a62-3608941b66a6&#39;)"><img id="code_img_closed_5dbea430-9234-468e-8a62-3608941b66a6" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: inline;"><img id="code_img_opened_5dbea430-9234-468e-8a62-3608941b66a6" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;5dbea430-9234-468e-8a62-3608941b66a6&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_5dbea430-9234-468e-8a62-3608941b66a6" class="cnblogs_code_hide" style="display: none;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> LogEventData
+    {
+        [BsonId]
+        </span><span style="color: #0000ff;">public</span> ObjectId Id { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 时间
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        [BsonDateTimeOptions(Representation = BsonType.DateTime, Kind =<span style="color: #000000;"> DateTimeKind.Local)]
+        </span><span style="color: #0000ff;">public</span> DateTime Date { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 错误级别
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Level { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 日志来源
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> LogSource { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 日志信息
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Message { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 类名
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> ClassName { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 方法名
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> MethodName { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 完整信息
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> FullInfo { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 行号
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>        
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> LineNumber { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 文件名
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>        
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> FileName { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> ip
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> IP { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 是否发送邮件,不为空则发送邮件，多个接收人用英文逗号隔开
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+<span style="color: #000000;">        [JsonIgnore]
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Emails { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">override</span> <span style="color: #0000ff;">string</span><span style="color: #000000;"> ToString()
+        {
+            </span><span style="color: #0000ff;">return</span> JsonConvert.SerializeObject(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+        }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: inline;">View Code</span></div>
+<ul>
+<li>定义database Context</li>
+</ul>
+<p>站点根目录新建文件夹Context和类，别忘了引用 MongoDB.Driver&nbsp; nuget包</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919161111480-1002467753.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;8e5fb65f-f9b6-45b8-8258-f3d8084adb26&#39;)"><img id="code_img_closed_8e5fb65f-f9b6-45b8-8258-f3d8084adb26" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: inline;"><img id="code_img_opened_8e5fb65f-f9b6-45b8-8258-f3d8084adb26" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;8e5fb65f-f9b6-45b8-8258-f3d8084adb26&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8e5fb65f-f9b6-45b8-8258-f3d8084adb26" class="cnblogs_code_hide" style="display: none;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> MongoContext
+    {
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">readonly</span> IMongoDatabase _database = <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">readonly</span> <span style="color: #0000ff;">string</span><span style="color: #000000;"> _logCollection;
+        </span><span style="color: #0000ff;">public</span> MongoContext(IOptions&lt;DBSettings&gt;<span style="color: #000000;"> settings)
+        {
+            </span><span style="color: #0000ff;">var</span> client = <span style="color: #0000ff;">new</span><span style="color: #000000;"> MongoClient(settings.Value.ConnectionString);
+            </span><span style="color: #0000ff;">if</span> (client != <span style="color: #0000ff;">null</span><span style="color: #000000;">)
+                _database </span>=<span style="color: #000000;"> client.GetDatabase(settings.Value.Database);
+            _logCollection </span>=<span style="color: #000000;"> settings.Value.LogCollection;
+        }
+
+        </span><span style="color: #0000ff;">public</span> IMongoCollection&lt;LogEventData&gt;<span style="color: #000000;"> LogEventDatas
+        {
+            </span><span style="color: #0000ff;">get</span><span style="color: #000000;">
+            {
+                </span><span style="color: #0000ff;">return</span> _database.GetCollection&lt;LogEventData&gt;<span style="color: #000000;">(_logCollection);
+            }
+        }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: inline;">View Code</span></div>
+<ul>
+<li>添加Repository</li>
+</ul>
+<p>别纠结为什么叫这个名了，就是数据访问类，像是常用的DAL，创建目录如下，之后可以通过依赖注入来访问具体实现</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919162605014-1431221088.png" alt=""></p>
+<p>IRepository类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;705243c8-cdad-4d4b-8da6-68f361130671&#39;)"><img id="code_img_closed_705243c8-cdad-4d4b-8da6-68f361130671" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_705243c8-cdad-4d4b-8da6-68f361130671" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;705243c8-cdad-4d4b-8da6-68f361130671&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_705243c8-cdad-4d4b-8da6-68f361130671" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">interface</span> IRepository&lt;T&gt; <span style="color: #0000ff;">where</span> T:<span style="color: #0000ff;">class</span><span style="color: #000000;">
+    {
+        Task</span>&lt;IEnumerable&lt;T&gt;&gt;<span style="color: #000000;"> GetAll();
+        Task</span>&lt;T&gt; Get(<span style="color: #0000ff;">string</span><span style="color: #000000;"> id);
+        Task Add(T item);
+        Task</span>&lt;<span style="color: #0000ff;">bool</span>&gt; Remove(<span style="color: #0000ff;">string</span><span style="color: #000000;"> id);
+        Task</span>&lt;<span style="color: #0000ff;">bool</span>&gt; Update(<span style="color: #0000ff;">string</span> id, <span style="color: #0000ff;">string</span><span style="color: #000000;"> body);
+    }</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>LogRepository类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;5dcd2d27-7f81-4f83-9c3d-74e9e0707e2b&#39;)"><img id="code_img_closed_5dcd2d27-7f81-4f83-9c3d-74e9e0707e2b" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_5dcd2d27-7f81-4f83-9c3d-74e9e0707e2b" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;5dcd2d27-7f81-4f83-9c3d-74e9e0707e2b&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_5dcd2d27-7f81-4f83-9c3d-74e9e0707e2b" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> LogRepository : IRepository&lt;LogEventData&gt;<span style="color: #000000;">
+    {
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">readonly</span> MongoContext _context = <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">public</span> LogRepository(IOptions&lt;DBSettings&gt;<span style="color: #000000;"> settings)
+        {
+            _context </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> MongoContext(settings);
+        }
+
+
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">async</span><span style="color: #000000;"> Task Add(LogEventData item)
+        {
+            </span><span style="color: #0000ff;">await</span><span style="color: #000000;"> _context.LogEventDatas.InsertOneAsync(item);
+        }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">async</span> Task&lt;IEnumerable&lt;LogEventData&gt;&gt;<span style="color: #000000;"> GetList(QueryLogModel model)
+        {
+            </span><span style="color: #0000ff;">var</span> builder = Builders&lt;LogEventData&gt;<span style="color: #000000;">.Filter;
+            FilterDefinition</span>&lt;LogEventData&gt; filter =<span style="color: #000000;"> builder.Empty;
+            </span><span style="color: #0000ff;">if</span> (!<span style="color: #0000ff;">string</span><span style="color: #000000;">.IsNullOrEmpty(model.Level))
+            {
+                filter </span>= builder.Eq(<span style="color: #800000;">"</span><span style="color: #800000;">Level</span><span style="color: #800000;">"</span><span style="color: #000000;">, model.Level);
+            }
+            </span><span style="color: #0000ff;">if</span> (!<span style="color: #0000ff;">string</span><span style="color: #000000;">.IsNullOrEmpty(model.LogSource))
+            {
+                filter </span>= filter &amp; builder.Eq(<span style="color: #800000;">"</span><span style="color: #800000;">LogSource</span><span style="color: #800000;">"</span><span style="color: #000000;">, model.LogSource);
+            }
+            </span><span style="color: #0000ff;">if</span> (!<span style="color: #0000ff;">string</span><span style="color: #000000;">.IsNullOrEmpty(model.Message))
+            {
+                filter </span>= filter &amp; builder.Regex(<span style="color: #800000;">"</span><span style="color: #800000;">Message</span><span style="color: #800000;">"</span>, <span style="color: #0000ff;">new</span> BsonRegularExpression(<span style="color: #0000ff;">new</span><span style="color: #000000;"> Regex(model.Message)));
+            }
+            </span><span style="color: #0000ff;">if</span> (DateTime.MinValue !=<span style="color: #000000;"> model.StartTime)
+            {
+                filter </span>= filter &amp; builder.Gte(<span style="color: #800000;">"</span><span style="color: #800000;">Date</span><span style="color: #800000;">"</span><span style="color: #000000;">, model.StartTime);
+            }
+            </span><span style="color: #0000ff;">if</span>(DateTime.MinValue !=<span style="color: #000000;"> model.EndTime)
+            {
+                filter </span>= filter &amp; builder.Lte(<span style="color: #800000;">"</span><span style="color: #800000;">Date</span><span style="color: #800000;">"</span><span style="color: #000000;">, model.EndTime);
+            }
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">await</span><span style="color: #000000;"> _context.LogEventDatas.Find(filter)
+                 .SortByDescending(log </span>=&gt;<span style="color: #000000;"> log.Date)
+                 .Skip((model.PageIndex </span>- <span style="color: #800080;">1</span>) *<span style="color: #000000;"> model.PageSize)
+                 .Limit(model.PageSize).ToListAsync();
+        }
+        </span><span style="color: #0000ff;">#region</span> 未实现方法
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">async</span> Task&lt;LogEventData&gt; Get(<span style="color: #0000ff;">string</span><span style="color: #000000;"> id)
+        {
+            </span><span style="color: #0000ff;">throw</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> NotImplementedException();
+        }
+
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">async</span> Task&lt;IEnumerable&lt;LogEventData&gt;&gt;<span style="color: #000000;"> GetAll()
+        {
+            </span><span style="color: #0000ff;">throw</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> NotImplementedException();
+        }
+
+        </span><span style="color: #0000ff;">public</span> Task&lt;<span style="color: #0000ff;">bool</span>&gt; Remove(<span style="color: #0000ff;">string</span><span style="color: #000000;"> id)
+        {
+            </span><span style="color: #0000ff;">throw</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> NotImplementedException();
+        }
+
+        </span><span style="color: #0000ff;">public</span> Task&lt;<span style="color: #0000ff;">bool</span>&gt; Update(<span style="color: #0000ff;">string</span> id, <span style="color: #0000ff;">string</span><span style="color: #000000;"> body)
+        {
+            </span><span style="color: #0000ff;">throw</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> NotImplementedException();
+        } 
+        </span><span style="color: #0000ff;">#endregion</span><span style="color: #000000;">
+    }</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;为了通过DI model来访问LogRepository，修改Startup.cs ，ConfigureServices添加如下代码</p>
+<div class="cnblogs_code">
+<pre>services.AddTransient&lt;IRepository&lt;LogEventData&gt;, LogRepository&gt;();//数据访问</pre>
+</div>
+<p>&nbsp;到这基本的数据写入和查询算是写完了，下面来实现Controller</p>
+<ul>
+<li>创建LogController</li>
+</ul>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919164153001-1121233476.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;9a7f5f69-c08c-4ac8-a9de-382718ebb7fc&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>&nbsp;</p>
+<p>控制器里整个逻辑很简单，除了向外提供不同日志级别的写入接口，也实现了日志查询接口给日志查看站点用，基本上够用了。到这编译的话会报错，有一些类还没加上，稍后加上。在Add方法内部，用到了new&nbsp;EmailHelpers。讲道理按.net core 对依赖注入的使用 ，这个 new是不应该出现在这的，就先这么着吧，下面补类：</p>
+<p>先创建Model文件夹下的两个类，很简单就不解释了</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919165246984-1420520706.png" alt=""></p>
+<p>QueryLogModel类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;ba539ee6-18c6-41eb-98bb-a53ec6318429&#39;)"><img id="code_img_closed_ba539ee6-18c6-41eb-98bb-a53ec6318429" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_ba539ee6-18c6-41eb-98bb-a53ec6318429" class="code_img_opened" style="" onclick="cnblogs_code_hide(&#39;ba539ee6-18c6-41eb-98bb-a53ec6318429&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_ba539ee6-18c6-41eb-98bb-a53ec6318429" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> QueryLogModel
+    {
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">int</span> _pageindex = <span style="color: #800080;">1</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">int</span> _pagesize = <span style="color: #800080;">20</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> PageIndex
+        {
+            </span><span style="color: #0000ff;">get</span> { <span style="color: #0000ff;">return</span><span style="color: #000000;"> _pageindex; }
+            </span><span style="color: #0000ff;">set</span> { _pageindex =<span style="color: #000000;"> value; }
+        }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> PageSize
+        {
+            </span><span style="color: #0000ff;">get</span> { <span style="color: #0000ff;">return</span><span style="color: #000000;"> _pagesize; }
+            </span><span style="color: #0000ff;">set</span> { _pagesize =<span style="color: #000000;"> value; }
+        }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Level { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> LogSource { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span> Message { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> DateTime StartTime { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+        </span><span style="color: #0000ff;">public</span> DateTime EndTime { <span style="color: #0000ff;">get</span>; <span style="color: #0000ff;">set</span><span style="color: #000000;">; }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>ResponseModel类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;148dd8d0-31e4-4d39-9a5a-3d95edd7b6f8&#39;)"><img id="code_img_closed_148dd8d0-31e4-4d39-9a5a-3d95edd7b6f8" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: inline;"><img id="code_img_opened_148dd8d0-31e4-4d39-9a5a-3d95edd7b6f8" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;148dd8d0-31e4-4d39-9a5a-3d95edd7b6f8&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_148dd8d0-31e4-4d39-9a5a-3d95edd7b6f8" class="cnblogs_code_hide" style="display: none;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> ResponseModel&lt;T&gt;<span style="color: #000000;">
+    {
+        </span><span style="color: #0000ff;">private</span> HttpStatusCode _resultCode =<span style="color: #000000;"> HttpStatusCode.OK;
+        </span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">string</span> _message = <span style="color: #800000;">"</span><span style="color: #800000;">请求成功</span><span style="color: #800000;">"</span><span style="color: #000000;">;        
+        </span><span style="color: #0000ff;">private</span> T _data = <span style="color: #0000ff;">default</span><span style="color: #000000;">(T);
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 返回码
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span><span style="color: #000000;"> HttpStatusCode ResultCode
+        {
+            </span><span style="color: #0000ff;">get</span> { <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">._resultCode; }
+            </span><span style="color: #0000ff;">set</span> { <span style="color: #0000ff;">this</span>._resultCode =<span style="color: #000000;"> value; }
+        }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 结果说明
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">string</span><span style="color: #000000;"> Message
+        {
+            </span><span style="color: #0000ff;">get</span> { <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">._message; }
+            </span><span style="color: #0000ff;">set</span> { <span style="color: #0000ff;">this</span>._message =<span style="color: #000000;"> value; }
+        }        
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 返回的数据
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #0000ff;">public</span><span style="color: #000000;"> T Data
+        {
+            </span><span style="color: #0000ff;">get</span> { <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">._data; }
+            </span><span style="color: #0000ff;">set</span> { <span style="color: #0000ff;">this</span>._data =<span style="color: #000000;"> value; }
+        }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: inline;">View Code</span></div>
+<p>&nbsp;创建EmailHelpers类</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919165724474-827162712.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;d2e1413e-5009-46a9-8f10-caec19768dfe&#39;)"><img id="code_img_closed_d2e1413e-5009-46a9-8f10-caec19768dfe" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_d2e1413e-5009-46a9-8f10-caec19768dfe" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;d2e1413e-5009-46a9-8f10-caec19768dfe&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_d2e1413e-5009-46a9-8f10-caec19768dfe" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> EmailHelpers
+    {
+        </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> SendMailInfo _mailinfo;
+        
+        </span><span style="color: #0000ff;">public</span> EmailHelpers(IOptions&lt;AppSettings&gt;<span style="color: #000000;"> appsettings)
+        {
+            _mailinfo </span>=<span style="color: #000000;"> appsettings.Value.SendMailInfo;
+        }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 异步发送邮件
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="emails"&gt;</span><span style="color: #008000;">email地址</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="subject"&gt;</span><span style="color: #008000;">邮件标题</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="content"&gt;</span><span style="color: #008000;">邮件内容</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span> SendMailAsync(<span style="color: #0000ff;">string</span> emails, <span style="color: #0000ff;">string</span> subject, <span style="color: #0000ff;">string</span><span style="color: #000000;"> content)
+        {
+            Task.Factory.StartNew(() </span>=&gt;<span style="color: #000000;">
+            {
+                SendEmail(emails, subject, content);
+            });
+        }
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;summary&gt;</span>
+        <span style="color: #808080;">///</span><span style="color: #008000;"> 邮件发送方法
+        </span><span style="color: #808080;">///</span> <span style="color: #808080;">&lt;/summary&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="emails"&gt;</span><span style="color: #008000;">email地址</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="subject"&gt;</span><span style="color: #008000;">邮件标题</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="content"&gt;</span><span style="color: #008000;">邮件内容</span><span style="color: #808080;">&lt;/param&gt;</span>
+        <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;returns&gt;&lt;/returns&gt;</span>
+        <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span> SendEmail(<span style="color: #0000ff;">string</span> emails, <span style="color: #0000ff;">string</span> subject, <span style="color: #0000ff;">string</span><span style="color: #000000;"> content)
+        {
+            </span><span style="color: #0000ff;">string</span>[] emailArray = emails.Split(<span style="color: #0000ff;">new</span> <span style="color: #0000ff;">char</span>[] { <span style="color: #800000;">'</span><span style="color: #800000;">;</span><span style="color: #800000;">'</span><span style="color: #000000;"> }, StringSplitOptions.RemoveEmptyEntries);
+            </span><span style="color: #0000ff;">string</span> fromSMTP = _mailinfo.SMTPServerName;        <span style="color: #008000;">//</span><span style="color: #008000;">邮件服务器</span>
+            <span style="color: #0000ff;">string</span> fromEmail = _mailinfo.SendEmailAdress;      <span style="color: #008000;">//</span><span style="color: #008000;">发送方邮件地址</span>
+            <span style="color: #0000ff;">string</span> fromEmailPwd = _mailinfo.SendEmailPwd;<span style="color: #008000;">//</span><span style="color: #008000;">发送方邮件地址密码</span>
+            <span style="color: #0000ff;">string</span> fromEmailName = _mailinfo.SiteName;   <span style="color: #008000;">//</span><span style="color: #008000;">发送方称呼</span>
+            <span style="color: #0000ff;">try</span><span style="color: #000000;">
+            {
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">新建一个MailMessage对象</span>
+                MailMessage aMessage = <span style="color: #0000ff;">new</span><span style="color: #000000;"> MailMessage();
+                aMessage.From </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> MailAddress(fromEmail, fromEmailName);
+                </span><span style="color: #0000ff;">foreach</span> (<span style="color: #0000ff;">var</span> item <span style="color: #0000ff;">in</span><span style="color: #000000;"> emailArray)
+                {
+                    aMessage.To.Add(item);
+                }
+                aMessage.Subject </span>=<span style="color: #000000;"> subject;
+                aMessage.Body </span>=<span style="color: #000000;"> content;
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                aMessage.BodyEncoding </span>= Encoding.GetEncoding(<span style="color: #800000;">"</span><span style="color: #800000;">utf-8</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+                aMessage.IsBodyHtml </span>= <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+                aMessage.Priority </span>=<span style="color: #000000;"> MailPriority.High;                
+                aMessage.ReplyToList.Add(</span><span style="color: #0000ff;">new</span><span style="color: #000000;"> MailAddress(fromEmail, fromEmailName));
+                SmtpClient smtp </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SmtpClient();
+
+                smtp.Host </span>=<span style="color: #000000;"> fromSMTP;
+                smtp.Timeout </span>= <span style="color: #800080;">20000</span><span style="color: #000000;">;
+                smtp.UseDefaultCredentials </span>= <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+                smtp.EnableSsl </span>= <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+                smtp.DeliveryMethod </span>=<span style="color: #000000;"> SmtpDeliveryMethod.Network;
+                smtp.Credentials </span>= <span style="color: #0000ff;">new</span> NetworkCredential(fromEmail, fromEmailPwd); <span style="color: #008000;">//</span><span style="color: #008000;">发邮件的EMIAL和密码</span>
+                smtp.Port = <span style="color: #0000ff;">int</span><span style="color: #000000;">.Parse(_mailinfo.SendEmailPort);                
+                smtp.Send(aMessage);
+            }
+            </span><span style="color: #0000ff;">catch</span><span style="color: #000000;"> (Exception ex)
+            {
+                </span><span style="color: #0000ff;">throw</span><span style="color: #000000;"> ex;
+            }
+        }
+    }</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>此类里需要引用nuget:System.Text.Encoding.CodePages, 那行报错的代码如果不想引用删掉就行</p>
+<p>到这接口基本上就可以用了。</p>
+<p>但是再加三个东西</p>
+<ul>
+<li><strong>扩展</strong></li>
+</ul>
+<p><strong>&nbsp;添加全局异常捕获服务</strong></p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919171820883-1418685616.png" alt=""></p>
+<p>ExceptionMiddlewareExtensions类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;d20ae6fc-c41f-48d3-9ff2-de5c0569acde&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 490.409px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>修改Startup.cs</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;e18ed40d-d0dd-4216-ada4-f5e869df95ab&#39;)"><img id="code_img_closed_e18ed40d-d0dd-4216-ada4-f5e869df95ab" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_e18ed40d-d0dd-4216-ada4-f5e869df95ab" class="code_img_opened" style="" onclick="cnblogs_code_hide(&#39;e18ed40d-d0dd-4216-ada4-f5e869df95ab&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_e18ed40d-d0dd-4216-ada4-f5e869df95ab" class="cnblogs_code_hide" style="display: block;">
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span> Configure(IApplicationBuilder app, IHostingEnvironment env,IOptions&lt;DBSettings&gt;<span style="color: #000000;"> settings)
+        {            
+            app.ConfigureExceptionHandler(settings);
+        }</span></pre>
+</div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p><strong>添加<a href="https://msgpack.org/" target="_blank">MessagePack</a>扩展</strong></p>
+<p>messagepack可以让我们在post数据的时候序列化数据，“压缩”数据传输大小,这个会结合针对接口封装的类库配合使用。</p>
+<p>引用nuget: MessagePack和WebApiContrib.Core.Formatter.MessagePack</p>
+<p>在ConfigureServices添加代码</p>
+<div class="cnblogs_code">
+<pre><span>services.AddMvcCore().AddMessagePackFormatters();
+services.AddMvc().AddMessagePackFormatters();</span></pre>
+</div>
+<p>扩展了<a class="message" title="corrected typo and added =&gt; &quot;application/msgpack&quot; media type" href="https://github.com/WebApiContrib/WebAPIContrib.Core/commit/f0d31ef6a6f4e9a3176586a97fea72b14d5eb5f7" data-pjax="true">media type</a>，用以支持<span class="pl-s"><span class="pl-pds">"application/x-msgpack<span class="pl-pds">",&nbsp;<span class="pl-s"><span class="pl-pds">"application/msgpack<span class="pl-pds">"，在接下来封装的类库中会使用"application/x-msgpack<span class="pl-pds">"，在web api来引入这个东西就是为了能解析从客户端传过来的数据</span></span></span></span></span></span></span></p>
+<p><strong>添加Swagger支持</strong></p>
+<p><span class="pl-s">引用nuget:Swashbuckle.AspNetCore</span></p>
+<p><span class="pl-s">修改ConfigureServices</span></p>
+<div class="cnblogs_code">
+<pre>services.AddSwaggerGen(c =&gt;<span>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1"<span> });
+            });</span></span></pre>
+</div>
+<p>修改Configure</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;9637ab2b-88a9-41f9-b01d-21153c2377bf&#39;)"><img id="code_img_closed_9637ab2b-88a9-41f9-b01d-21153c2377bf" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_9637ab2b-88a9-41f9-b01d-21153c2377bf" class="code_img_opened" style="" onclick="cnblogs_code_hide(&#39;9637ab2b-88a9-41f9-b01d-21153c2377bf&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_9637ab2b-88a9-41f9-b01d-21153c2377bf" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> Enable middleware to serve generated Swagger as a JSON endpoint.</span>
+<span style="color: #000000;">            app.UseSwagger();
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;"> Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            </span><span style="color: #008000;">//</span><span style="color: #008000;"> specifying the Swagger JSON endpoint.</span>
+            app.UseSwaggerUI(c =&gt;<span style="color: #000000;">
+            {
+                c.SwaggerEndpoint(</span><span style="color: #800000;">"</span><span style="color: #800000;">/swagger/v1/swagger.json</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">My API V1</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+                c.RoutePrefix </span>= <span style="color: #0000ff;">string</span>.Empty;<span style="color: #008000;">//</span><span style="color: #008000;">在应用的根 (</span><span style="color: #008000; text-decoration: underline;">http://localhost</span><span style="color: #008000;">:&lt;port&gt;/) 处提供 Swagger UI</span>
+            });</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>&nbsp;</p>
+<p>到这整个web api站点算是写完了，编译不出错就ok了。</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919175124625-1668291958.png" alt=""></p>
+<hr><hr>
+<p class="postTitle"><strong>二、实现类库</strong></p>
+<p class="postTitle">类库整体目录结构如下</p>
+<p class="postTitle"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919213903454-1280239758.png" alt=""></p>
+<p class="postTitle">1.新建类库LogApiHandler</p>
+<p class="postTitle">2.实现</p>
+<ul>
+<li class="postTitle">创建日志信息类，和WebApi那个对应，LogEventData</li>
+</ul>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;0fb924f3-aa6f-4624-907a-157a25f37c6c&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<ul>
+<li>创建日志级别类，就是其他开源项目常见的Level</li>
+</ul>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;1911653e-a40f-4302-b077-25472cf561db&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>上面代码是NLog Level源码,修改了一下，因为这个项目并不复杂，也不需要读配置。类里面有个LogApi属性会根据级别返回相应的日志接口，生产环境得在部署完WebApi站点以后，将里面的接口信息替换掉然后编译发布再用。</p>
+<ul>
+<li>创建日志追踪信息类，行号、类名、文件等等</li>
+</ul>
+<p>LogEventData类中有几个属性如下图，接下来创建的类就是为了获取它们</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919211738917-643555445.png" alt=""></p>
+<p>在项目中创建文件夹Core,结构如下，创建顺序为MethodItem、StackFrameItem、LocationInfo，它们层层相扣，最终由LocationInfo提供所需信息</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919211949080-1307514662.png" alt=""></p>
+<p>MethodItem类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;bd616671-b3ad-4c8d-b271-7c8e4029db3a&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>StackFrameItem类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;ee1e5376-65e2-45e3-846a-75d0679820f7&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>LocationInfo类</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;3d288c5b-8919-431f-afa0-486738822534&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>为什么会有这么多英文注释呢，因为这是copy的log4net源码。。。但是LocationInfo中重载了构造函数</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919212635520-2008789140.png" alt=""></p>
+<p>我需要先获取调用日志方法的StackTrace，然后传入构造方法，主要因为写入日志用到异步，如果在异步线程内用LocationInfo(Type callerStackBoundaryDeclaringType)，会导致获取不到我们期望的那几个追踪信息，因为StackTrace是在它内部new的，这会导致获取的是异步线程的信息。所以我要在进入异步线程前将StackTrace获取到。</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919213136854-1890994238.png" alt=""></p>
+<p>所以也就有了下面这个类（LogEventDataAsync），一个传入异步线程的数据对象，里面保存着一些基本的初始日志信息</p>
+<ul>
+<li>创建LogEventDataAsync</li>
+</ul>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;ae86b0cf-4731-4ff2-a6dc-d8f6220f2920&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 449.609px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>到目前为止日志信息的准备工作就做完了，下面来赋值写入mongodb</p>
+<p>先来创建两个帮助类吧，一个用于异步，一个是比较常见的请求类，都很简单</p>
+<p>创建Common文件夹，在下面创建两个类</p>
+<p>AsyncHelpers（NLog源码）</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;d807c133-5b6e-4ecc-be04-77fa82facabd&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 352.809px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>RequestHelpers</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;89f00a74-684c-45c5-b3d8-ca9696fac7ba&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>在RequestHelpers中真正用到的是public static void DoPost&lt;T&gt;(String url, T model)方法，里面用到了MessagePack以及扩展的MediaType&nbsp;"application/x-msgpack",所以这里要引用两个nuget包</p>
+<p>MessagePack和Sketch7.MessagePack.MediaTypeFormatter</p>
+<ul>
+<li>创建LogWriter</li>
+</ul>
+<p>LogWriter为调用Post方法的类，里面主要提供了异步调用的方法以及创建完整的日志信息功能</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;39ef63e2-6584-4257-a5a1-774dd73dcce4&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>GetLoggingEventData方法中就包含了LocationInfo的实例化，之所以放这里是因为这里异步执行，而获取追踪信息需要各种反射比较耗时，不然也就没有LogEventDataAsync这个类了，获取IP的方法没实现。。。</p>
+<ul>
+<li>创建Logger类</li>
+</ul>
+<p>这个类是真正暴露给开发者使用的类，就像开源项目log.debug这样的方式</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;f028b8b5-9317-4829-aaae-fdf1a99e4bdd&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 600px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>代码非常简单，重载了最常用的自定义信息和exception信息，以及邮件联系人。日志来源主要为了分类日志，像不同的服务、站点等等，可以方便入库后查询。到这已经可以编译使用了，但是为了在.net core中可以依赖注入这个Logger，最后添加一个扩展方法</p>
+<ul>
+<li>创建Extensions文件夹及LoggerServiceExtension类</li>
+</ul>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;5f176f2f-37a2-450d-a261-8ada56cd21f1&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 283.209px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p><strong>三、使用（引入类库）</strong></p>
+<p>一般项目使用可以这样，比如控制台</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;8189e5e6-d761-4478-a5b0-6ca8b57c4297&#39;)"><img id="code_img_closed_8189e5e6-d761-4478-a5b0-6ca8b57c4297" class="code_img_closed" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ContractedBlock.gif" alt="" style="display: none;"><img id="code_img_opened_8189e5e6-d761-4478-a5b0-6ca8b57c4297" class="code_img_opened" style="" onclick="cnblogs_code_hide(&#39;8189e5e6-d761-4478-a5b0-6ca8b57c4297&#39;,event)" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8189e5e6-d761-4478-a5b0-6ca8b57c4297" class="cnblogs_code_hide" style="display: block;"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">class</span><span style="color: #000000;"> Program
+    {
+        </span><span style="color: #0000ff;">static</span> Logger logger = LogApiHandler.Logger.GetLogger(<span style="color: #800000;">"</span><span style="color: #800000;">logSource</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span> Main(<span style="color: #0000ff;">string</span><span style="color: #000000;">[] args)
+        {
+            logger.Debug(</span><span style="color: #800000;">"</span><span style="color: #800000;">text</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+            Console.ReadLine();
+        }        
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<span class="cnblogs_code_collapse" style="display: none;">View Code</span></div>
+<p>.net core的话比如web项目可以这样用依赖注入</p>
+<p>在Startup中，ConfigureServices添加一行代码</p>
+<div class="cnblogs_code">
+<pre>services.AddLoggerService(<span style="color: #800000;">"</span><span style="color: #800000;">TestApi</span><span style="color: #800000;">"</span>);</pre>
+</div>
+<p>然后在其他类中就可以这么用了，当然也可以用new的方式使用</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> ValuesController : ControllerBase
+    {
+        </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> Logger _logger;
+        </span><span style="color: #0000ff;">public</span><span style="color: #000000;"> ValuesController(Logger logger)
+        {
+            _logger </span>=<span style="color: #000000;"> logger;
+        }
+        </span><span style="color: #008000;">//</span><span style="color: #008000;"> GET api/values</span>
+<span style="color: #000000;">        [HttpGet]
+        </span><span style="color: #0000ff;">public</span> ActionResult&lt;IEnumerable&lt;<span style="color: #0000ff;">string</span>&gt;&gt;<span style="color: #000000;"> Get()
+        {
+            _logger.Error(</span><span style="color: #800000;">"</span><span style="color: #800000;">测试依赖注入logger</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">ddd@ddd.com</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">string</span>[] { <span style="color: #800000;">"</span><span style="color: #800000;">value1</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">value2</span><span style="color: #800000;">"</span><span style="color: #000000;"> };
+        }
+    }</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>大体使用方式就是这样了。</p>
+<p>&nbsp;最后得需要自己写一个页面来调用web api的api/log/getlist接口查询显示日志</p>
+<p>mongodb客户端用的Robo 3T，安装完记得修改Options--Display Dates in--Local Timezone,不然默认utc,存入时的时间少8小时。mongodb存入数据就是下图</p>
+<p><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/656769-20180919225438906-468150384.png" alt=""></p>
+<p><a href="http://vr1024.com.cn/LogApiHandler.rar" target="_blank"><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 18px; background-color: #ffffff; color: #ff9900;">点此下载源码</span></a></p>
+<p><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 14px; color: #ff0000; background-color: #ffffff;">更新：</span></p>
+<p><span style="background-color: #ffffff; color: #ff0000;"><span style="font-family: &#39;Microsoft YaHei&#39;; font-size: 14px;">1.LogWriter类</span>Writer方法加try catch，因为异步线程内异常不会被主线程捕获</span></p>
+<p><span style="background-color: #ffffff; color: #ff0000;">2.添加请求认证</span></p>
+<ul>
+<li><span style="background-color: #ffffff; color: #ff0000;">LogApiHandler类库修改</span></li>
+</ul>
+<p><span style="background-color: #ffffff; color: #ff0000;">LogWriter类新增两个字段：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">readonly</span> <span style="color: #0000ff;">string</span> UserName = <span style="color: #800000;">"</span><span style="color: #800000;">UserName</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+</span><span style="color: #0000ff;">private</span> <span style="color: #0000ff;">readonly</span> <span style="color: #0000ff;">string</span> Password = <span style="color: #800000;">"</span><span style="color: #800000;">Password</span><span style="color: #800000;">"</span>;</pre>
+</div>
+<p><span style="color: #ff0000;">RequestHelpers类重载一个请求方法：</span></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;5832781b-a244-4423-8123-39f1aff8d4f7&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 380.809px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p><span style="color: #ff0000;">修改LogWriter类Writer方法，将请求改为上面重载的新方法：</span></p>
+<div class="cnblogs_code">
+<pre>RequestHelpers.DoPost&lt;LogEventData&gt;(logapi, led, UserName, Password);</pre>
+</div>
+<ul>
+<li><span style="color: #ff0000;">LogWebApi站点修改</span></li>
+</ul>
+<p><span style="color: #ff0000;">appsettings.json新增配置：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #800000;">"</span><span style="color: #800000;">AppSettings</span><span style="color: #800000;">"</span><span style="color: #000000;">: {    
+    </span><span style="color: #800000;">"</span><span style="color: #800000;">RequestAuth</span><span style="color: #800000;">"</span><span style="color: #000000;">: {
+      </span><span style="color: #800000;">"</span><span style="color: #800000;">UserName</span><span style="color: #800000;">"</span>: <span style="color: #800000;">"</span><span style="color: #800000;">UserName</span><span style="color: #800000;">"</span><span style="color: #000000;">,
+      </span><span style="color: #800000;">"</span><span style="color: #800000;">Password</span><span style="color: #800000;">"</span>: <span style="color: #800000;">"</span><span style="color: #800000;">Password</span><span style="color: #800000;">"</span><span style="color: #000000;">
+    }
+  }</span></pre>
+</div>
+<p><span style="color: #ff0000;">Model--AppSettings下修改AppSettings类</span></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;b2f70c6b-b2c6-497d-803e-daaa41e270af&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 311.209px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p><span style="color: #ff0000;">Extensions文件夹下新建RequestAuthorizeMiddleware类：</span></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;4b91b6d8-051f-4f3e-a162-d9384e90711c&#39;)"><div>按 Ctrl+C 复制代码</div><textarea style="width: 1338.01px; height: 560.809px; font-family: &quot;Courier New&quot;; font-size: 12px; line-height: 1.5;"></textarea><div>按 Ctrl+C 复制代码</div></div>
+<p>&nbsp;<span style="color: #ff0000;">Startup.cs&nbsp;Configure添加代码：</span></p>
+<div class="cnblogs_code">
+<pre>app.UseMiddleware(<span style="color: #0000ff;">typeof</span>(RequestAuthorizeMiddleware));</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/betterlife/tag/.net%20core/">.net core</a>,             <a href="https://www.cnblogs.com/betterlife/tag/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">日志系统</a>,             <a href="https://www.cnblogs.com/betterlife/tag/mongodb/">mongodb</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(9676033,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;96a8b9d0-4415-e411-8d02-90b11c0b17d6&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/betterlife/" target="_blank"><img src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/20161013154359.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/betterlife/">去海边生活</a><br>
+            <a href="https://home.cnblogs.com/u/betterlife/followees/">关注 - 1</a><br>
+            <a href="https://home.cnblogs.com/u/betterlife/followers/">粉丝 - 3</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;96a8b9d0-4415-e411-8d02-90b11c0b17d6&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(9676033,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">5</span>
+    </div>
+    <div class="buryit" onclick="votePost(9676033,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/betterlife/p/9521105.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/betterlife/p/9521105.html" title="发布于 2018-08-22 23:24">linux centos7 erlang rabbitmq安装</a>
+    <br>
+    <a href="https://www.cnblogs.com/betterlife/p/11156698.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/betterlife/p/11156698.html" title="发布于 2019-07-09 13:16">删除n天前的文件或文件夹 bat批处理</a>
+
+</div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2018-09-19 22:16</span>&nbsp;
+<a href="https://www.cnblogs.com/betterlife/">去海边生活</a>&nbsp;
+阅读(<span id="post_view_count">2205</span>)&nbsp;
+评论(<span id="post_comment_count">7</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=9676033" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(9676033);return false;">收藏</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+<script src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 192895, cb_blogApp = 'betterlife', cb_blogUserGuid = '96a8b9d0-4415-e411-8d02-90b11c0b17d6';
+    var cb_entryId = 9676033, cb_entryCreatedDate = '2018-09-19 22:16', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<!--done-->
+<br>
+<div class="feedback_area_title">评论</div>
+<div class="feedbackNoItems"><div class="feedbackNoItems"></div></div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072020" class="layer">#1楼</a>
+<a name="4072020" id="comment_anchor_4072020"></a>
+
+
+<span class="comment_date">2018-09-20 09:31</span>
+
+ | 
+
+            <a id="a_comment_author_4072020" href="https://home.cnblogs.com/u/55916/" target="_blank">大漠孤阳</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072020" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    mark
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072020, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072020, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072090" class="layer">#2楼</a>
+<a name="4072090" id="comment_anchor_4072090"></a>
+
+
+<span class="comment_date">2018-09-20 10:27</span>
+
+ | 
+
+            <a id="a_comment_author_4072090" href="https://www.cnblogs.com/kevn/" target="_blank">ColgateKas</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072090" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    为什么新建的控制器默认是继承ControllerBase而不是Controller？
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072090, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072090, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4072090_avatar" style="display:none">
+            https://pic.cnblogs.com/face/u84404.jpg?id=27125833
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072112" class="layer">#3楼</a>
+<a name="4072112" id="comment_anchor_4072112"></a>
+[<span class="louzhu">楼主</span>]
+
+<span class="comment_date">2018-09-20 10:34</span>
+
+ | 
+
+            <a id="a_comment_author_4072112" href="https://www.cnblogs.com/betterlife/" target="_blank">去海边生活</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072112" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    <a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072090" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4072090);">@</a>
+ColgateKas<br>新建控制器的时候，有两个选项，一个MVC控制器，一个API控制器。API创建完是ControllerBase，MVC控制器的话是Controller，版本是.NET Core 2.1。<br>2.0的好像都是Controller。。。
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072112, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072112, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4072112_avatar" style="display:none">
+            https://pic.cnblogs.com/face/656769/20161013154359.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072730" class="layer">#4楼</a>
+<a name="4072730" id="comment_anchor_4072730"></a>
+
+
+<span class="comment_date">2018-09-20 19:10</span>
+
+ | 
+
+            <a id="a_comment_author_4072730" href="https://www.cnblogs.com/itmaxin/" target="_blank">花开是心碎了</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072730" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    太有用了，正想搞个日志系统呢，正好参考楼主的。共进步
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072730, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072730, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4072730_avatar" style="display:none">
+            https://pic.cnblogs.com/face/648893/20150615174126.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072738" class="layer">#5楼</a>
+<a name="4072738" id="comment_anchor_4072738"></a>
+[<span class="louzhu">楼主</span>]
+
+<span class="comment_date">2018-09-20 19:14</span>
+
+ | 
+
+            <a id="a_comment_author_4072738" href="https://www.cnblogs.com/betterlife/" target="_blank">去海边生活</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072738" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    <a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072730" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4072730);">@</a>
+花开是心碎了<br>共进步。可以按步骤把代码先copy了，是能保证通过的，总体都很简单，编译就能用了，报错的话跟我说可能少某个nuget包。回头我把源码传了
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072738, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072738, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4072738_avatar" style="display:none">
+            https://pic.cnblogs.com/face/656769/20161013154359.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072950" class="layer">#6楼</a>
+<a name="4072950" id="comment_anchor_4072950"></a>
+[<span class="louzhu">楼主</span>]
+
+<span class="comment_date">2018-09-20 22:41</span>
+
+ | 
+
+            <a id="a_comment_author_4072950" href="https://www.cnblogs.com/betterlife/" target="_blank">去海边生活</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4072950" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    <a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072730" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4072730);">@</a>
+花开是心碎了<br>源码传了在最后面 希望能帮到你
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4072950, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4072950, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4072950_avatar" style="display:none">
+            https://pic.cnblogs.com/face/656769/20161013154359.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/betterlife/p/9676033.html#4405752" class="layer">#7楼</a>
+<a name="4405752" id="comment_anchor_4405752"></a>
+
+        <span id="comment-maxId" style="display:none">4405752</span>
+        <span id="comment-maxDate" style="display:none">2019/10/27 下午3:09:16</span>
+
+<span class="comment_date">2019-10-27 15:09</span>
+
+ | 
+
+            <a id="a_comment_author_4405752" href="https://www.cnblogs.com/itmaxin/" target="_blank">花开是心碎了</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<div id="comment_body_4405752" data-format-type="Ubb" class="blog_comment_body cnblogs-ubb">
+    <a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072950" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4072950);">@</a>
+去海边生活<br><fieldset class="comment_quote"><legend><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072950" title="查看引用原文">引用</a></legend><br>@花开是心碎了<br>源码传了在最后面 希望能帮到你<br></fieldset><br>谢谢，要不要搞到github上继续更新呢？楼主
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4405752, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4405752, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4405752_avatar" style="display:none">
+            https://pic.cnblogs.com/face/648893/20150615174126.png
+        </span>
+
+			</div>
+		</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/betterlife/p/9676033.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/betterlife/p/9676033.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-ucancode&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/season?fromSource=gwzcw.3422970.3422970.3422970&amp;utm_medium=cpc&amp;utm_id=gwzcw.3422970.3422970.3422970" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【活动】腾讯云服务器推出云产品采购季 1核2G首年仅需99元</a><br><a href="https://developer.aliyun.com/article/712655?utm_content=g_1000088930" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】阿里技术3年大合辑免费电子书一键下载</a><br><a href="https://developer.aliyun.com/ask/257857?utm_content=g_1000088950" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云开发者社区&#39;)">【推荐】精品问答：微服务架构 Spring 核心知识 50 问</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="CMSh2qrbqOgCFZOMvQodw8kCQw"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-google-container-id="1" data-load-complete="true" src="./基于.net core webapi和mongodb的日志系统 - 去海边生活 - 博客园_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="构建ASP.NET MVC4+EF5+EasyUI+Unity2.x注入的后台管理系统（12）-系统日志和异常的处理②" href="https://www.cnblogs.com/ymnets/p/3436579.html" target="_blank" onclick="clickRecomItmem(3436579)">构建ASP.NET MVC4+EF5+EasyUI+Unity2.x注入的后台管理系统（12）-系统日志和异常的处理②</a><br>·  <a title=".NET Core的日志[1]:采用统一的模式记录日志" href="https://www.cnblogs.com/artech/p/logging-for-net-core-01.html" target="_blank" onclick="clickRecomItmem(5778549)">.NET Core的日志[1]:采用统一的模式记录日志</a><br>·  <a title="【开源】OSharp框架解说系列（6.1）：日志系统设计" href="https://www.cnblogs.com/guomingfeng/p/osharp-logging-design.html" target="_blank" onclick="clickRecomItmem(4275473)">【开源】OSharp框架解说系列（6.1）：日志系统设计</a><br>·  <a title="ABP理论学习之日志记录" href="https://www.cnblogs.com/farb/p/ABPLogging.html" target="_blank" onclick="clickRecomItmem(5054190)">ABP理论学习之日志记录</a><br>·  <a title=".NET Core的文件系统[1]：读取并监控文件的变化" href="https://www.cnblogs.com/artech/p/net-core-file-provider-01.html" target="_blank" onclick="clickRecomItmem(5702336)">.NET Core的文件系统[1]：读取并监控文件的变化</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/9676033">更多推荐...</a><div id="cnblogs_t5"><a href="https://developer.aliyun.com/ask/257834?utm_content=g_1000088953" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T5-阿里云开发者社区&#39;)">大咖问答：D2 前端技术专场问答</a></div></div></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CMWh2qrbqOgCFZOMvQodw8kCQw">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/658034/" target="_blank">疫情重创旅游业，一季度将亏损17亿的携程冬日历劫</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658033/" target="_blank">2月全球手机厂商出货量同比减少38%，小米超过华为排第三</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658032/" target="_blank">对话斗鱼云游戏负责人：做强网页端，近3成为新增用户</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658031/" target="_blank">马斯克：特斯拉上海工厂和数百个供应商运营正常</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/658030/" target="_blank">阿里云发布《2019云上企业安全指南》，破解云上安全运营难题</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/betterlife/">
+            去海边生活
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/betterlife/" title="入园时间：2014-07-27">
+            5年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/betterlife/followers/">
+            3
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/betterlife/followees/">
+            1
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;96a8b9d0-4415-e411-8d02-90b11c0b17d6&#39;)">+加关注</a></div>
+        <script>getFollowStatus('96a8b9d0-4415-e411-8d02-90b11c0b17d6');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/02/20&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2020年3月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/04/20&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                        <td class="CalWeekendDay" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                        <td class="" align="center">
+                            5
+                        </td>
+                        <td class="" align="center">
+                            6
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        7
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            14
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                20
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            21
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            28
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            4
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                9
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                10
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            11
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    <div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+		<li>
+
+<a href="https://www.cnblogs.com/betterlife/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/betterlife/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/betterlife/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/betterlife/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/betterlife/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+
+<li><a id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="https://www.cnblogs.com/betterlife/p/9676033.html#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    <div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/.net%20core/">.net core</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/7z%20%E5%91%BD%E4%BB%A4/">7z 命令</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/appcmd/">appcmd</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/centos7/">centos7</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/lua%E5%AE%89%E8%A3%85/">lua安装</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/mongodb/">mongodb</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/rabbitmq/">rabbitmq</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">日志系统</a>(1)
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/betterlife/tag/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%20scroll-view/">微信小程序 scroll-view</a>(1)
+        </li>
+
+</ul>
+</div>
+
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+<div class="catListPostCategory">
+<h3 class="catListTitle">
+
+随笔分类
+
+
+</h3>
+
+
+<ul>
+
+<li>
+<a href="https://www.cnblogs.com/betterlife/category/896376.html" rel="" target="">
+    .net bug(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/category/1281950.html" rel="" target="">
+    linux(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/category/1038489.html" rel="" target="">
+    常用代码(6)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/category/894223.html" rel="" target="">
+    微信小程序(17)
+</a>
+ 
+</li>
+
+</ul>
+
+
+</div>
+<div class="catListPostArchive">
+<h3 class="catListTitle">
+
+随笔档案
+
+
+</h3>
+
+
+<ul>
+
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2019/10.html" rel="" target="">
+    2019年10月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2019/07.html" rel="" target="">
+    2019年7月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2018/09.html" rel="" target="">
+    2018年9月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2018/08.html" rel="" target="">
+    2018年8月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2018/07.html" rel="" target="">
+    2018年7月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2018/06.html" rel="" target="">
+    2018年6月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2017/07.html" rel="" target="">
+    2017年7月(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2017/02.html" rel="" target="">
+    2017年2月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2016/12.html" rel="" target="">
+    2016年12月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/betterlife/archive/2016/10.html" rel="" target="">
+    2016年10月(18)
+</a>
+ 
+</li>
+
+</ul>
+
+
+</div>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4405752">1. Re:基于.net core webapi和mongodb的日志系统</a></li>
+                    <li class="recent_comment_body">@ 去海边生活引用@花开是心碎了源码传了在最后面 希望能帮到你谢谢，要不要搞到github上继续更新呢？楼主...</li>
+                    <li class="recent_comment_author">--花开是心碎了</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072950">2. Re:基于.net core webapi和mongodb的日志系统</a></li>
+                    <li class="recent_comment_body">@ 花开是心碎了源码传了在最后面 希望能帮到你...</li>
+                    <li class="recent_comment_author">--去海边生活</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072738">3. Re:基于.net core webapi和mongodb的日志系统</a></li>
+                    <li class="recent_comment_body">@ 花开是心碎了共进步。可以按步骤把代码先copy了，是能保证通过的，总体都很简单，编译就能用了，报错的话跟我说可能少某个nuget包。回头我把源码传了...</li>
+                    <li class="recent_comment_author">--去海边生活</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072730">4. Re:基于.net core webapi和mongodb的日志系统</a></li>
+                    <li class="recent_comment_body">太有用了，正想搞个日志系统呢，正好参考楼主的。共进步</li>
+                    <li class="recent_comment_author">--花开是心碎了</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/betterlife/p/9676033.html#4072112">5. Re:基于.net core webapi和mongodb的日志系统</a></li>
+                    <li class="recent_comment_body">@ ColgateKas新建控制器的时候，有两个选项，一个MVC控制器，一个API控制器。API创建完是ControllerBase，MVC控制器的话是Controller，版本是.NET Core ...</li>
+                    <li class="recent_comment_author">--去海边生活</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5970193.html">
+                            1. 微信小程序组件action-sheet(7069)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5957007.html">
+                            2. 微信小程序组件text(6323)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5960381.html">
+                            3. 微信小程序组件checkbox(5705)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5969578.html">
+                            4. 微信小程序组件radio(5397)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5956353.html">
+                            5. 微信小程序组件scroll-view(3980)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/9676033.html">
+                            1. 基于.net core webapi和mongodb的日志系统(7)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/betterlife/p/5956353.html">
+                            2. 微信小程序组件scroll-view(3)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    <div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/betterlife/p/9676033.html">
+                                1. 基于.net core webapi和mongodb的日志系统(5)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2020 去海边生活
+<br><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+</body></html>

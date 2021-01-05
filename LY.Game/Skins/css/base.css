@@ -1,0 +1,870 @@
+﻿@charset "utf-8";
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+    /*@font-face {
+	font-weight: normal;
+	font-style: normal;
+	/*font-family: "微软雅黑", 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', "sans-serif";*/
+
+
+    /*	font-family:'Source-Han-Ligh4499dc86765e9';}*/
+
+
+    /*@font-face {
+	font-family:"gothambook";
+	src: url(../font/gothambook.otf);
+}*/
+
+    */ body,
+    html {
+        width: 100%;
+        padding-top: 50px;
+    }
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "微软雅黑", 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', "sans-serif", 'HanHei SC';
+    line-height: 1.5;
+    font-size: 16px;
+    color: #333333;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+th,
+var {
+    font-weight: normal;
+    font-style: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+caption,
+th {
+    text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 18px;
+}
+
+h6 {
+    font-size: 16px;
+}
+
+q:before,
+q:after {
+    content: '';
+}
+
+abbr,
+acronym {
+    border: 0;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #CDCDCD;
+    background-color: #CDCDCD;
+    height: 1px;
+}
+
+blockquote {
+    color: #666;
+    font-style: italic;
+}
+
+sup,
+sub {
+    line-height: 0;
+}
+
+abbr,
+acronym {
+    border-bottom: 1px dotted #666;
+}
+
+pre {
+    white-space: pre;
+}
+
+pre,
+code,
+tt {
+    font: 12px 'andale mono', 'lucida console', monospace;
+    line-height: 1.5;
+}
+
+
+/*clear clearfix*/
+
+.clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.clear {
+    clear: both;
+}
+
+.radius5 {
+    -moz-border-radius: 5px;
+    /* Gecko browsers*/
+    -webkit-border-radius: 5px;
+    /* Webkit browsers*/
+    border-radius: 5px;
+}
+
+.p10 {
+    padding: 0 10px;
+}
+
+.pt10 {
+    padding: 10px;
+}
+
+.p20 {
+    padding: 20px 10px;
+}
+
+.pt20 {
+    padding: 20px;
+}
+
+.ty {
+    -webkit-box-shadow: 0px 2px 2px #CCC;
+    -moz-box-shadow: 0px 2px 2px #CCC;
+    box-shadow: 0px 2px 2px #CCC;
+}
+
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+ 
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #c5c5c5;
+    }
+
+    input:-moz-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #c5c5c5;
+    }
+
+    input::-moz-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #c5c5c5;
+    }
+
+    input:-ms-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #c5c5c5;
+    }
+
+.mb5 {
+    margin-bottom: 5px !important;
+}
+
+.mb10 {
+    margin-bottom: 10px !important;
+}
+
+.mb8 {
+    margin-bottom: 8px !important;
+}
+
+.mb15 {
+    margin-bottom: 15px !important;
+}
+
+.mb16 {
+    margin-bottom: 16px !important;
+}
+
+.mb20 {
+    margin-bottom: 20px !important;
+}
+
+.mb40 {
+    margin-bottom: 40px !important;
+}
+
+.mt5 {
+    margin-top: 5px !important;
+}
+
+.mt10 {
+    margin-top: 10px !important;
+}
+
+.mt20 {
+    margin-top: 20px !important;
+}
+
+.mt15 {
+    margin-top: 15px !important;
+}
+
+.mt40 {
+    margin-top: 40px !important;
+}
+
+.ml5 {
+    margin-left: 5px !important;
+}
+
+.ml10 {
+    margin-left: 10px !important;
+}
+
+.ml20 {
+    margin-left: 20px !important;
+}
+
+.mr5 {
+    margin-right: 5px !important;
+}
+
+.mr8 {
+    margin-right: 8px !important;
+}
+
+.mr10 {
+    margin-right: 10px !important;
+}
+
+.mr20 {
+    margin-right: 20px !important;
+}
+
+.mr40 {
+    margin-right: 40px !important;
+}
+
+.mb40 {
+    margin-bottom: 40px !important;
+}
+
+.w1 {
+    width: 10%;
+}
+
+.w2 {
+    width: 20%;
+}
+
+.w3 {
+    width: 30%;
+}
+
+.w33 {
+    width: 33.3%;
+}
+
+.w4 {
+    width: 40%;
+}
+
+.w48 {
+    width: 48%;
+}
+
+.w5 {
+    width: 50%;
+}
+
+.w6 {
+    width: 60%;
+}
+
+.w7 {
+    width: 70%;
+}
+
+.w8 {
+    width: 80%;
+}
+
+.w85 {
+    width: 85%;
+}
+
+.w9 {
+    width: 90%;
+}
+
+.mg {
+    margin: 0 auto;
+}
+
+.marginNone {
+    margin: 0;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+}
+
+a:active {
+    color: inherit;
+}
+
+a:hover {
+    color: inherit;
+}
+
+a:link {
+    color: inherit;
+}
+
+a:visited {
+    color: inherit;
+}
+
+.headerbox {
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    background: #fff;
+    position: fixed;
+    _position: absolute;
+    _clear: both;
+    _top: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop +(documentElement.clientHeight-this.clientHeight) - 1: document.body.scrollTop +(document.body.clientHeight-this.clientHeight) - 1);
+}
+    .headerbox li.l a {
+    display:block;
+    }
+        .headerbox li.l .r a:hover {
+        text-decoration:underline;
+        }
+        .headerbox .welcome strong{display:block;}
+    .headerbox .logout {
+    line-height:40px;
+    text-align:center;
+    width:40px;
+    }
+    .headerbox .login {
+    padding-top:20px;
+        }
+        .headerbox .logout a:hover,.headerbox .login a:hover, .headerbox .welcome a:hover {
+       text-decoration:underline;
+        }
+        .headerbox .login.change{
+            background:none;padding-bottom:0;margin:0;
+        }
+.headerbox-fix {
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    background: #fff;
+    opacity: 1;
+    cursor: pointer;
+    position: fixed;
+    _position: absolute;
+    _clear: both;
+    _top: expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop +(documentElement.clientHeight-this.clientHeight) - 1: document.body.scrollTop +(document.body.clientHeight-this.clientHeight) - 1);
+    animation: fadeIn 0.5s linear;
+}
+
+@-webkit-keyframes fadeIn {
+    from 0% {
+        opacity: 0;
+    }
+
+    to 100% {
+        opacity: 1;
+    }
+}
+
+.headerbox2 {
+    width: 100%;
+    background: #FFFFFF;
+    border-bottom: 1px solid #e1e1e1;
+    min-width: 1280px;
+}
+
+.header {
+    width: 62.5%;
+    margin: 0 auto;
+    padding: 5px 10px;
+    vertical-align: middle;
+    position: relative;
+    min-width: 1200px;
+}
+.avatar-box {
+margin-right:5px;
+padding-top:3px;
+}
+    .avatar-box a {
+    display:inline-block;
+    }
+
+    .header h1 {
+        width: 108px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .header p {
+        width: 60px;
+        vertical-align: middle; 
+        color: #fe8103;
+        font-size: 12px;
+    }
+     .header p a, .header p:visited{     color: #fe8103;}
+    .header ul {
+        width: 60%;
+        vertical-align: middle;
+        position: absolute;
+        left: 20%;
+    }
+
+        .header ul li {
+            width: 20%;
+            text-align: center;
+            padding-top: 20px;
+            position: relative;
+            font-size: 13px;
+        }
+
+
+            /*.header ul li:hover .ch{
+	animation: fadeIn 0.1s linear;
+}
+.header ul li:hover .en{
+	animation: fadeOut 0.1s linear;
+}
+@keyframes fadeIn{
+	0%{opacity: 0;}
+	100%{opacity: 1;}
+}
+@keyframes fadeOut{
+	0%{opacity: 1;}
+	100%{opacity:0;}
+}*/
+
+
+            /*.header ul li .ch{	opacity: 0;}*/
+
+            .header ul li.on {
+                color: #FE8103;
+            }
+
+                .header ul li.on .ch {
+                    border-bottom: 3px solid #fe8103;
+                    padding-bottom: 5px;
+                }
+
+            .header ul li:hover .ch {
+                border-bottom: 3px solid #fe8103;
+                padding-bottom: 5px;
+            }
+
+            .header ul li i {
+                display: block;
+                width: 100%;
+                height: 44px;
+                position: absolute;
+                top: 0px;
+                left: 0;
+                z-index: 666;
+            }
+
+            .header ul li.on .en {
+                border-bottom: 3px solid #fe8103;
+                padding-bottom: 5px;
+            }
+
+    .header div.r {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+        .header div.r span {
+            display: inline-block;
+            width: 16px;
+            height: 14px;
+            background: url(../img/commom/login_l.png) no-repeat center center;
+            vertical-align: middle;
+            margin-right:10px;
+        }
+        .logo {
+        width:100%;
+        display:block;
+        }
+        .header div.r img.avatar {
+            display: inline-block;
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+    .header .sl {
+        border: 1px solid #E1E1E1;
+        width: 388px;
+        position: absolute;
+        right: 0;
+        top: 50px;
+        background: #FFF;
+        height: 366px;
+        display: none;
+        z-index:100000;
+    }
+
+    .header ul.st {
+        height: 47px;
+        border-bottom: 1px solid #E1E1E1;
+        width: 100%;
+        position: static;
+    }
+
+        .header ul.st li {
+            padding: 11px 0 11px;
+            float: left;
+            width: 50%;
+        }
+
+            .header ul.st li em {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #fe8103;
+                font-size: 14px;
+                text-align: center;
+                color: #FFF;
+                margin-left: 10px;
+            }
+
+.slm {
+    width: 100%;
+    overflow-y: scroll;
+    height: 278px;
+    display: none;
+}
+
+    .slm div {
+        padding: 15px 20px;
+        border-bottom: 1px solid#E1E1E1;
+    }
+
+        .slm div img.l {
+            width: 33px;
+            height: 33px;
+        }
+
+        .slm div p.r {
+            font-size: 14px;
+            color: #999;
+            width: 280px;
+            padding: 0;
+        }
+
+.checkmore {
+    width: 100%;
+    height: 39px;
+    text-align: center;
+    background: #fafafa;
+    line-height: 39px;
+    font-size: 14px;
+    color: #999;
+}
+    .checkmore a, .checkmore:visited {
+    color:#888;
+    font-family:Consolas;
+    font-size:12px;
+    }
+        .checkmore a:hover {
+        text-decoration:underline;
+        }
+
+.st li { 
+ background: #fafafa;
+}
+.st li.on {
+   background:#fff;
+    color: #fe8103;
+}
+
+.slm.block {
+    display: block;
+}
+
+.footerbox {
+    width: 100%;
+    background: #333;
+    min-width: 1280px;
+}
+
+.footer {
+    width: 62.5%;
+    margin: 0 auto;
+    padding: 20px 0;
+    vertical-align: middle;
+    min-width: 1200px;
+    text-align: center;
+    color: #c7c7c7;
+    font-size: 13px;
+}
+
+    .footer div.mg {
+        text-align: center;
+        width: 40%;
+        padding: 10px 0;
+    }
+
+    .footer div.l a {
+        color: #c7c7c7;
+        font-size: 13px;
+    }
+
+        .footer div.l a:active {
+            color: #c7c7c7;
+        }
+
+        .footer div.l a:hover {
+            color: #c7c7c7;
+        }
+
+        .footer div.l a:link {
+            color: #c7c7c7;
+        }
+
+        .footer div.l a:visited {
+            color: #c7c7c7;
+        }
+
+    .footer div.l {
+        padding: 10px 0;
+    }
+
+    .footer ul.r {
+        padding: 10px 0;
+    }
+
+        .footer ul.r li {
+            width: 23px;
+            height: 22px;
+            margin: 0 10px;
+        }
+
+            .footer ul.r li.tenc {
+                background: url(../img/index/qq.png);
+            }
+
+            .footer ul.r li.sina {
+                background: url(../img/index/sina.png);
+            }
+
+            .footer ul.r li.webc {
+                background: url(../img/index/webchat.png);
+                position: relative;
+            }
+
+                .footer ul.r li.webc img {
+                    position: absolute;
+                    bottom: 100%;
+                    right: 0;
+                    width: 271px;
+                    display: none;
+                }
+
+                .footer ul.r li.webc:hover img {
+                    display: block;
+                }
+
+.ch {
+    display: none;
+}
+
+.footer div.mg.bqbox:hover .ch {
+    display: inline;
+}
+
+.table {
+    display: table;
+    vertical-align: middle;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/*.mc > div > div > div.table-cell {
+height:573px;
+}*/
+
+/*内容*/
+.headerbox li a, .headerbox li a:visited, .shaixuantop li a, .shaixuantop li a:visited {
+    color: #333;
+}
+
+/* 定义keyframe动画，命名为blink */
+
+@keyframes blink{
+  0%{opacity: 1;}
+  50%{opacity: 1;}
+  50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+  100%{opacity: 0;} 
+}
+
+/* 添加兼容性前缀 */
+
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-ms-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* 定义blink类*/
+.blink{
+    animation: blink .75s linear infinite;  
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink .75s linear infinite;
+    -moz-animation: blink .75s linear infinite;
+    -ms-animation: blink .75s linear infinite;
+    -o-animation: blink .75s linear infinite;
+    color: #dd4814;
+}
+img{
+    width:auto;
+    max-width:100%;
+}

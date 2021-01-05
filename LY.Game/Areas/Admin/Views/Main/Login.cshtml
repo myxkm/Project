@@ -1,0 +1,48 @@
+﻿@model LoginPostViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>后台管理</title>
+    @Html.Partial("_css")
+    <link href="/skins/admin/css/login.css" rel="stylesheet">
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) { window.top.location = window.location };
+    </script>
+</head>
+<body class="signin">
+    <div class="signinpanel" style="width:300px;margin: 15% auto 0;">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <form method="post">
+                    <h4 class="no-margins login-title">登录：</h4>
+                    @if (!string.IsNullOrEmpty(Model.ErrorMsg))
+                    {
+                        <p class="m-t-md error-msg">
+                            <i class="fa fa-close"></i>
+                            @Model.ErrorMsg
+                        </p>
+                    }
+                    @Html.TextBoxFor(t => t.UserName, new { @class = "form-control uname", placeholder = "用户名" })
+                    @Html.PasswordFor(t => t.Password, new { @class = "form-control pword m-b", placeholder = "密码" })
+
+                    <a href="@Url.Action("forgot")">忘记密码了？</a>
+                    <button class="btn btn-success btn-block">登录</button>
+                </form>
+            </div>
+        </div>
+      @Html.Partial("_copyright")
+    </div>
+</body>
+
+</html>

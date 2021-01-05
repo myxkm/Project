@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //  $.get("http://localhost:44390/oauth", $.param({ user: "user_xkm", password: "1#" })).done(function (token) {
+    //    localStorage.setItem("token", token);
+    //});
+    function getRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    var token = getRequest().token;
+    var token_local = localStorage.getItem("token_local");
+    if (token || token_local) {
+        localStorage.setItem("token_local",token||token_local)
+    } else {
+        window.location.href = "https://localhost:44379?redicrect_url=" + location.href;
+    }
+
+    //$.post("https://localhost:44389/api/WeatherForecast/post").done(function (token) {
+    //    console.log(token)
+    //});
+</script>

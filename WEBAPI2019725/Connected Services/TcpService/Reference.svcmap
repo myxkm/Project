@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="53859421-302f-409d-b998-07618d24ee62" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="net.tcp://localhost:1113/CompanyService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="45888424-ca39-4e12-9549-dcda19a803fe" SourceId="1" SourceUrl="net.tcp://localhost:1113/CompanyService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="d300ce1f-0a28-47e2-94e9-53577c28545a" SourceId="1" SourceUrl="net.tcp://localhost:1113/CompanyService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="12a80153-1dd4-4651-ad37-47b37b122acb" SourceId="1" SourceUrl="net.tcp://localhost:1113/CompanyService/mex" />
+    <MetadataFile FileName="WCF.Model.xsd" MetadataType="Schema" ID="dd9393cf-9803-4783-85a9-9d8a4de77ada" SourceId="1" SourceUrl="net.tcp://localhost:1113/CompanyService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

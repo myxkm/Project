@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="353aabcd248c4af496e08d0de8b65bbc" Name="Diagram1">
+        <EntityTypeShape EntityType="YTDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YTDBModel.B_Caregory" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YTDBModel.B_User" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Details" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Examination_Paper_Master" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Examination_Paper_Type" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Master" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Question_Master" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Question_Option" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_Question_Type" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_User_Score_Details" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="YTDBModel.OJT_User_Score_Master" Width="1.5" PointX="8.75" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,155 @@
+﻿* {box-sizing:border-box; }
+body {background:url(../images/18r_tracielouise_clarity.jpg);background-size:100%; background-position:top center;background-attachment:fixed; }
+.feature {
+	width: 100%;
+	overflow-y: auto;
+	position: relative;
+	padding: 10% 0 1%;
+
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+    /*background: url("../images/psimg/reg-log-bg.jpg") no-repeat center center;*/ 
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.images/psimg/reg-log-bg.jpg', sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/psimg/reg-log-bg.jpg', sizingMethod='scale')";
+}
+.register-login-all .tab-content{
+	width: 100%;
+	min-height: 400px;
+	background-color: #ffffff;
+	box-shadow: 0 0 16px #7f7581;
+	-webkit-box-shadow: 0 0 16px #7f7581;
+	-moz-box-shadow: 0 0 16px #7f7581;
+	-o-box-shadow: 0 0 16px #7f7581;
+	z-index: 1;
+	position: relative;
+	padding: 20px 50px;
+	overflow: hidden;
+}
+.register-login-all .form-control{
+	height: 40px;
+	background-color: #ebebeb;
+	border-radius: 0;
+}
+.register-login-all {
+	width: 450px;
+	min-height: 436px;
+	position: relative;
+	margin: 0 auto;
+}
+.register-login-all.register-login-three{
+	width: 650px;
+}
+.register-login-left{
+	width: 60%;
+}
+.register-login-right{
+	width: 40%;
+	padding: 30px 0 30px 60px;
+	position: relative;
+}
+.register-login-right .login-right-sx{
+	width: 60px;
+	text-align: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background: url("../images/icons/login-three-sx.png") repeat-y center;
+}
+.register-login-right .login-right-sx span{
+	width: 60px;
+	text-align: center;
+	height: 30px;
+	background-color: #ffffff;
+	line-height: 30px;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	margin-top: -15px;
+	color: #666666;
+	font-size: 14px;
+}
+.register-login-right .login-three-right-btn{
+	height: 40px;
+	display: block;
+	width: 100%;
+	padding-left: 50px;
+	line-height: 40px;
+	font-size: 14px;
+	color: #feffff;
+	position: relative;
+}
+.register-login-right .login-three-right-btn.three-right-qq{
+	background-color: #4e9ac8;
+}
+.register-login-right .login-three-right-btn.three-right-wechat{
+	background-color: #51b341;
+}
+.register-login-right .login-three-right-btn.three-right-weibo{
+	background-color: #d42c4c;
+	margin-bottom: 60px;
+}
+.register-login-right .login-three-right-btn.three-right-qq span{
+	background-image: url("../images/icons/reg-log-qq.png");
+}
+.register-login-right .login-three-right-btn.three-right-wechat span{
+	background-image: url("../images/icons/reg-log-wechat.png");
+}
+.register-login-right .login-three-right-btn.three-right-weibo span{
+	background-image: url("../images/icons/reg-log-weibo.png");
+}
+.register-login-right .login-three-right-btn span{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	left: 0;
+	top: 0;
+	border-right: 1px solid rgba(0,0,0,.1);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.register-login-all .nav{
+	height: 36px;
+	padding: 0 0 0 36px;
+	border: 0;
+}
+.register-login-all .nav a{
+	padding: 0 24px;
+	line-height: 36px;
+	color: #767676!important;
+	background-color: #ebebeb!important;
+	border: none!important;
+}
+ 
+.login-panel{
+	width: 450px;
+	background-color: #ffffff;
+	box-shadow: 0 0 16px #7f7581;
+	-webkit-box-shadow: 0 0 16px #7f7581;
+	-moz-box-shadow: 0 0 16px #7f7581;
+	-o-box-shadow: 0 0 16px #7f7581;
+	z-index: 1;
+	position: relative;
+	padding: 20px 50px;
+	overflow: hidden;
+    margin:0 auto;
+}
+login-panel .form-control { height: 40px; background-color: #ebebeb; border-radius: 0; }
+
+.u-btn2,.u-btn2:hover,.u-btn2:active{color:#FFF;}
+.u-btn2{display:block;width:100%;height:40px;line-height:40px;border:none;overflow:hidden;text-align:center;background:#69b3f2;font-family:"Microsoft YaHei",\5fae\8f6f\96c5\9ed1,arial,\5b8b\4f53;font-size:18px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;}
+.u-btn2:hover{background:#7cbdf5;}
+.u-btn2:active{background:#59a4e4;}
+.u-btn2-db{float:left;width:191px;margin-right:10px;}
+/* 加important防止皮肤覆盖 */
+.u-btn2-dis{color:#717171 !important;background:#eee !important;}
+.u-btn2-dis:hover{color:#909090 !important;background:#f2f2f2 !important;}
+.u-btn2-dis:active{color:#717171 !important;background:#e3e3e3 !important;}

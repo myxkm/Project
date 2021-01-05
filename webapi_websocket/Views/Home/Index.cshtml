@@ -1,0 +1,89 @@
+﻿<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+            is an ideal platform for building RESTful applications on the .NET Framework.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    </div>
+</div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <input class="form-control" />
+    <a class="btn-block" style="">open</a>
+    <a class="btn-primary" style="">send</a>
+    <a class="btn-danger">close</a>
+</div>
+@section scripts {
+    <script>
+
+        //var wsUrl ='ws://' + window.location.hostname + ':' + window.location.port + '/WebSocketDemos.ashx?user=' + $("#user").val()
+        var wsUrl = "wss://localhost:44377/api/Chat/Lo?user=" + $('.form-control').val();
+        if (true) {
+            var ws ;
+            $('.btn-block').click(function () {
+                if (ws.readyState == WebSocket.OPEN) {
+                    alert("当前处于打开状态，无需重复！")
+                    return;
+                }
+                createws();
+            })
+            createws();
+            function createws() {
+                ws = new WebSocket(wsUrl);
+                ws.onopen = (e) => {
+                    console.log("Connection open ...");
+
+                    $('.btn-primary').click(function () {
+                        if (ws.readyState != WebSocket.OPEN) {
+                            alert("当前处于关闭状态，无法发送！")
+                            return;
+                        }
+                        ws.send($('.form-control').val()) // 发送消息
+                    })
+
+                    ws.onmessage = (e) => {
+                        console.log("onmessage  ...", e);
+                        $('body').append('<p> onmessage ' + e.data + '</p>')
+                        if (e.data == '2') {
+                            alert('loead')
+                        }
+                    }
+                    ws.onerror = (e) => {
+                        console.log("onerror ...", e);
+                        $('body').append('<p> onerror  ' + e.data + '</p>')
+                    }
+                    ws.onclose = (e) => {
+                        console.log("onclose  ...", e);
+                        $('body').append('<p> onclose success</p>')
+                    }
+                    $('.btn-danger').click(function () {
+                        console.log("关闭  ... ws", ws);
+                        console.log("关闭  ... WebSocket.close", WebSocket.CLOSED);
+                        if (ws.readyState == WebSocket.CLOSED) {
+                            alert('处于关闭状态,无法关闭')
+                        }
+                        ws.close()
+                    })
+                }
+            }
+        }
+    </script>
+}
